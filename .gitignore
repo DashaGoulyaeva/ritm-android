@@ -4,12 +4,25 @@
 .gradle/
 .kotlin/
 local.properties
-
+build/
 **/build/
 
 captures/
 .externalNativeBuild/
 .cxx/
+
+*.aab
+*.apk
+output-metadata.json
+*.jks
+*.keystore
+google-services.json
+*.hprof
+*.log
+
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
 
 .DS_Store
 Thumbs.db
