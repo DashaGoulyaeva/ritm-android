@@ -10,7 +10,7 @@
 
 | # | Задача | Owner | Статус | Зависит от |
 |---|---|---|---|---|
-| L-01 | Git bootstrap: инициализировать репозиторий и подключить origin | Lead | BLOCKED | — |
+| L-01 | Git bootstrap: инициализировать репозиторий и подключить origin | Lead | DONE | — |
 | L-02 | Android SDK wiring: настроить `sdk.dir`/`ANDROID_SDK_ROOT` и проверить сборку | Lead | DONE | — |
 | L-03 | Проверить доступ к plugin-интеграциям `@github` и `@figma` | Lead | BLOCKED | — |
 

@@ -4,6 +4,13 @@
 
 ---
 
+## 2026-04-20 | Lead | Baseline опубликован в GitHub
+
+- Добавлен `origin`: `https://github.com/DashaGoulyaeva/ritm-android`.
+- Выполнен push baseline в `main` после merge с удалённым `Initial commit`.
+- Актуальный SHA в `origin/main`: `9e779556ffd80b7205aa5933a55ee6f06652e59e`.
+- `L-01` переведён в `DONE`, `L-03` остаётся `BLOCKED` (MCP ресурсы `@github/@figma` недоступны в окружении).
+
 ## 2026-04-20 | Lead | Verification pass: SDK/build + quality gates
 
 - Проверен local.properties: sdk.dir=C\\:\\Android.
