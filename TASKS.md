@@ -1,8 +1,8 @@
-﻿# TASKS.md — Атомарные задачи MVP
+# TASKS.md — Атомарные задачи MVP
 
 > Статусы: TODO | IN_PROGRESS | DONE | BLOCKED
 > Каждая задача = один вертикальный slice или инфраструктурная единица.
-> Агент не берёт следующую задачу, пока не закрыта текущая.
+> Следующая задача берётся только после закрытия текущей.
 
 ---
 
@@ -49,9 +49,9 @@
 
 | # | Задача | Owner | Статус | Зависит от |
 |---|---|---|---|---|
-| H-01 | HabitEntity + HabitCheckEntity + HabitDao | Builder | TODO | F-03 |
-| H-02 | HabitRepository + CreateHabit + ArchiveHabit + GetActiveHabits use cases | Builder | TODO | H-01 |
-| H-03 | CheckHabitToday + GetHabitStreak + GetHabitHistory use cases | Builder | TODO | H-02 |
+| H-01 | HabitEntity + HabitCheckEntity + HabitDao | Builder | DONE | F-03 |
+| H-02 | HabitRepository + CreateHabit + ArchiveHabit + GetActiveHabits use cases | Builder | DONE | H-01 |
+| H-03 | CheckHabitToday + GetHabitStreak + GetHabitHistory use cases | Builder | DONE | H-02 |
 | H-04 | HabitsViewModel + HabitsUiState | Builder | TODO | H-02, H-03 |
 | H-05 | HabitsScreen — список привычек + создание (bottom sheet) | Builder | TODO | H-04, F-05 |
 | H-06 | HabitDetailScreen — история + стрик | Builder | TODO | H-04 |
@@ -64,9 +64,9 @@
 
 | # | Задача | Owner | Статус | Зависит от |
 |---|---|---|---|---|
-| FA-01 | FastingSessionEntity + FastingDao | Builder | TODO | F-03 |
-| FA-02 | FastingRepository + StartFasting + StopFasting + GetActiveSession use cases | Builder | TODO | FA-01 |
-| FA-03 | GetFastingHistory + CalculateRemainingTime use cases | Builder | TODO | FA-02 |
+| FA-01 | FastingSessionEntity + FastingDao | Builder | DONE | F-03 |
+| FA-02 | FastingRepository + StartFasting + StopFasting + GetActiveSession use cases | Builder | DONE | FA-01 |
+| FA-03 | GetFastingHistory + CalculateRemainingTime use cases | Builder | DONE | FA-02 |
 | FA-04 | FastingViewModel + FastingUiState | Builder | TODO | FA-02, FA-03 |
 | FA-05 | FastingBottomSheet — выбор режима + старт | Builder | TODO | FA-04, F-05 |
 | FA-06 | FastingTimerWidget — активный таймер (для Today и отдельного экрана) | Builder | TODO | FA-04 |
@@ -80,9 +80,9 @@
 
 | # | Задача | Owner | Статус | Зависит от |
 |---|---|---|---|---|
-| C-01 | CyclePeriodEntity + CycleDayLogEntity + CycleDao | Builder | TODO | F-03 |
-| C-02 | CycleRepository + LogPeriodStart + LogPeriodEnd + GetCurrentCycleDay use cases | Builder | TODO | C-01 |
-| C-03 | PredictNextPeriod + GetCycleDayLog + SaveCycleDayLog use cases | Builder | TODO | C-02 |
+| C-01 | CyclePeriodEntity + CycleDayLogEntity + CycleDao | Builder | DONE | F-03 |
+| C-02 | CycleRepository + LogPeriodStart + LogPeriodEnd + GetCurrentCycleDay use cases | Builder | DONE | C-01 |
+| C-03 | PredictNextPeriod + GetCycleDayLog + SaveCycleDayLog use cases | Builder | DONE | C-02 |
 | C-04 | CycleViewModel + CycleUiState | Builder | TODO | C-02, C-03 |
 | C-05 | CycleCalendarScreen — календарь с отметками | Builder | TODO | C-04, F-05 |
 | C-06 | CycleDayJournalScreen — дневник дня (выделения, симптомы, настроение, заметка) | Builder | TODO | C-04 |
@@ -121,7 +121,7 @@
 
 ## Post-MVP backlog
 
-*(Не реализовывать без явного решения Lead Agent)*
+*(Не реализовывать без явного решения лида проекта)*
 
 - Тёмная тема
 - Экспорт данных
@@ -129,4 +129,5 @@
 - Виджеты главного экрана
 - Аналитика и тренды
 - Wear OS
+
 

@@ -1,4 +1,4 @@
-﻿*.iml
+*.iml
 .idea/
 .claude/
 .gradle/
@@ -26,3 +26,5 @@ render.experimental.xml
 
 .DS_Store
 Thumbs.db
+
+.private/

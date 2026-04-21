@@ -1,8 +1,8 @@
-﻿# MINI-SPEC W-06, W-08, S-02 — Water history + reminders + settings
+# MINI-SPEC W-06, W-08, S-02 — Water history + reminders + settings
 
 **Статус:** Принято  
 **Дата:** 2026-04-20  
-**Роль:** Product Agent
+**Роль:** Product
 
 ## User stories
 
@@ -43,3 +43,4 @@
 - Unit tests water проходят (когда доступен SDK/окружение).
 - `qualityCheck` проходит (когда доступен SDK/окружение).
 - `TASKS.md` и `docs/devlog.md` синхронизированы.
+
