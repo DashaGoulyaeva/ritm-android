@@ -47,14 +47,14 @@
 
 Полный список и статусы задач: [TASKS.md](./TASKS.md).
 
-## MVP release loop (human + AI agent)
+## Owner Verification и релизный контур MVP
 
-- Manual validation scenarios are fixed in `docs/HUMAN_VERIFICATION.md`.
-- AI APK build/report protocol is fixed in `docs/APK_DELIVERY_RUNBOOK.md`.
-- This loop starts right after MVP functional TODOs are closed.
+- Сценарии owner verification зафиксированы в `docs/MVP_VERIFICATION_CHECKLIST.md`.
+- Автоматическая сборка и формат отчёта зафиксированы в `docs/APK_BUILD_RUNBOOK.md`.
+- Этот контур запускается после закрытия функциональных TODO в MVP.
 
-## Phase 2 after MVP
+## Второй этап после MVP
 
-- Expansion plan is fixed in `docs/PHASE2_EXPANSION_PLAN.md`.
-- Order: human feedback -> prioritization -> stability/polish -> store readiness -> closed test -> public release.
+- План развития зафиксирован в `docs/PHASE2_EXPANSION_PLAN.md`.
+- Порядок: фидбек -> приоритизация -> стабильность и полировка -> подготовка к сторам -> закрытый тест -> публичный релиз.
 

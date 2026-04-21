@@ -1,30 +1,30 @@
-# PHASE2_EXPANSION_PLAN.md - Stage 2 after MVP
+# PHASE2_EXPANSION_PLAN.md — Второй этап после MVP
 
-> Starts only after MVP is complete and validated on installed APK.
-
----
-
-## Stage-2 goal
-
-Move Ritm from MVP to a full product: improve reliability, expand useful scenarios, and prepare store release.
-
-## 10 atomic tasks for Stage 2
-
-1. **P2-01 Feedback intake** - collect and normalize human feedback after MVP.
-2. **P2-02 Prioritization** - rank feedback by impact/effort and freeze release backlog.
-3. **P2-03 UX polish pass** - align UX quality across Today/Water/Habits/Cycle/Fasting/Steps.
-4. **P2-04 Reliability pass** - fix crash/ANR/edge-case defects from real usage.
-5. **P2-05 Data safety** - add local export/backup strategy.
-6. **P2-06 Privacy-first analytics** - add minimal product events without personal data leakage.
-7. **P2-07 Distribution prep** - configure release signing, versioning, changelog, device QA matrix.
-8. **P2-08 Store assets** - prepare icon/screenshots/description/policy text.
-9. **P2-09 Closed testing** - run closed testing in Play (or alternative store) and collect report.
-10. **P2-10 Public release readiness** - go/no-go review, publish, and post-release monitoring.
+> Запуск только после закрытия MVP и проверки установленного APK.
 
 ---
 
-## Stage-2 start criteria
+## Цель этапа 2
 
-- MVP tasks are closed in `TASKS.md`.
-- APK is built and checked via `docs/APK_DELIVERY_RUNBOOK.md` + `docs/HUMAN_VERIFICATION.md`.
-- At least one full human usage feedback loop is documented.
+Перевести «Ритм» из MVP в полноценный продукт: повысить стабильность, расширить полезные сценарии и подготовить публикацию в сторах.
+
+## 10 атомарных задач этапа 2
+
+1. **P2-01 Сбор фидбека** — собрать и нормализовать пользовательский фидбек после MVP.
+2. **P2-02 Приоритизация** — разложить фидбек по impact/effort и зафиксировать релизный backlog.
+3. **P2-03 UX-polish** — выровнять качество UX на Today/Вода/Привычки/Цикл/Fasting/Шаги.
+4. **P2-04 Надёжность** — закрыть crash/ANR/edge-case дефекты из реального использования.
+5. **P2-05 Безопасность данных** — добавить локальный экспорт/резервное копирование.
+6. **P2-06 Privacy-first аналитика** — внедрить минимальные продуктовые события без утечки персональных данных.
+7. **P2-07 Подготовка к дистрибуции** — настроить release-подпись, versioning, changelog, QA-матрицу устройств.
+8. **P2-08 Store-материалы** — подготовить иконку, скриншоты, описание и policy-тексты.
+9. **P2-09 Закрытое тестирование** — провести закрытый тест в Google Play (или альтернативном сторе) и собрать отчёт.
+10. **P2-10 Публичный релиз** — провести go/no-go ревью, выпустить и запустить пост-релизный мониторинг.
+
+---
+
+## Критерии старта этапа 2
+
+- MVP-задачи закрыты в `TASKS.md`.
+- APK собран и проверен по `docs/APK_BUILD_RUNBOOK.md` + `docs/MVP_VERIFICATION_CHECKLIST.md`.
+- Зафиксирован минимум один полный цикл пользовательского фидбека.

@@ -138,42 +138,42 @@
 ---
 
 
-## Stage 7: MVP Release Loop (human check + AI APK build)
+## Этап 7: Owner Verification и релизный контур MVP
 
-| # | Task | Owner | Status | Depends on |
+| # | Задача | Owner | Статус | Зависит от |
 |---|---|---|---|---|
-| R-01 | Freeze MVP scope and sync DONE/TODO in TASKS.md | Lead | TODO | Stages 0-6 |
-| R-02 | Finalize manual verification checklist and pass/fail rules | Product + Test | TODO | R-01 |
-| R-03 | Run human smoke (HV-01..HV-04) on current APK | Test + Human | TODO | R-02 |
-| R-04 | Run module manual checks (HV-05..HV-08 as modules become ready) | Test + Human | TODO | R-03 |
-| R-05 | Register bugs from human pass and prioritize them | Lead + Reviewer | TODO | R-03, R-04 |
-| R-06 | Fix blocker/high issues before baseline APK build | Builder | TODO | R-05 |
-| R-07 | AI agent runs `:app:assembleDebug` and `qualityCheck` | Lead Agent | TODO | R-06 |
-| R-08 | AI agent posts unified report + APK artifact path | Docs Agent | TODO | R-07 |
-| R-09 | Human installs APK on device and confirms final smoke-pass | Human | TODO | R-08 |
-| R-10 | Publish MVP baseline and open Stage 2 queue | Lead | TODO | R-09 |
+| R-01 | Заморозить MVP-scope и синхронизировать DONE/TODO в TASKS.md | Lead | TODO | Этапы 0-6 |
+| R-02 | Зафиксировать чек-лист верификации и критерии pass/fail | Product + Test | TODO | R-01 |
+| R-03 | Пройти базовый smoke-чек (HV-01..HV-04) на актуальном APK | Test | TODO | R-02 |
+| R-04 | Пройти модульные проверки (HV-05..HV-08 по готовности модулей) | Test | TODO | R-03 |
+| R-05 | Зафиксировать найденные баги и расставить приоритеты | Lead + Reviewer | TODO | R-03, R-04 |
+| R-06 | Закрыть blocker/high дефекты перед baseline-сборкой APK | Builder | TODO | R-05 |
+| R-07 | Запустить автоматическую сборку `:app:assembleDebug` и `qualityCheck` | Lead | TODO | R-06 |
+| R-08 | Сформировать единый отчёт и указать путь к APK-артефакту | Docs | TODO | R-07 |
+| R-09 | Установить APK на устройство и подтвердить финальный smoke-pass | Test | TODO | R-08 |
+| R-10 | Зафиксировать baseline MVP и открыть очередь этапа 2 | Lead | TODO | R-09 |
 
-Manual verification checklist: `docs/HUMAN_VERIFICATION.md`  
-AI APK build/report runbook: `docs/APK_DELIVERY_RUNBOOK.md`
+Чек-лист верификации: `docs/MVP_VERIFICATION_CHECKLIST.md`  
+Регламент сборки и отчёта: `docs/APK_BUILD_RUNBOOK.md`
 
 ---
 
-## Stage 8: Post-MVP expansion (phase 2)
+## Этап 8: Развитие после MVP
 
-| # | Task | Owner | Status | Depends on |
+| # | Задача | Owner | Статус | Зависит от |
 |---|---|---|---|---|
-| P2-01 | Collect and normalize human feedback after MVP | Product | TODO | R-10 |
-| P2-02 | Prioritize feedback (impact/effort) and create release backlog | Lead + Product | TODO | P2-01 |
-| P2-03 | UX polish pass for key screens | Builder + Designer | TODO | P2-02 |
-| P2-04 | Stability sprint (crash/ANR/edge cases) | Builder + Test | TODO | P2-02 |
-| P2-05 | Local data export/backup strategy | Builder | TODO | P2-02 |
-| P2-06 | Privacy-first analytics baseline | Architect + Builder | TODO | P2-02 |
-| P2-07 | Release signing and versioning setup for stores | Lead + Builder | TODO | P2-04 |
-| P2-08 | Store assets (icon, screenshots, descriptions, policy text) | Product + Docs | TODO | P2-07 |
-| P2-09 | Closed testing in store + quality report | Test + Lead | TODO | P2-08 |
-| P2-10 | Public release + post-release monitoring | Lead | TODO | P2-09 |
+| P2-01 | Сбор и нормализация пользовательского фидбека после MVP | Product | TODO | R-10 |
+| P2-02 | Приоритизация фидбека (impact/effort) и формирование release-backlog | Lead + Product | TODO | P2-01 |
+| P2-03 | UX-polish ключевых экранов | Builder + Designer | TODO | P2-02 |
+| P2-04 | Stability sprint: crash/ANR/edge cases | Builder + Test | TODO | P2-02 |
+| P2-05 | Экспорт/резерв локальных данных | Builder | TODO | P2-02 |
+| P2-06 | Privacy-first аналитика продукта | Architect + Builder | TODO | P2-02 |
+| P2-07 | Подготовка release-подписи и versioning для сторов | Lead + Builder | TODO | P2-04 |
+| P2-08 | Store-материалы (иконка, скриншоты, описания, policy) | Product + Docs | TODO | P2-07 |
+| P2-09 | Закрытое тестирование в сторе и отчёт по качеству | Test + Lead | TODO | P2-08 |
+| P2-10 | Публичный релиз и пост-релизный мониторинг | Lead | TODO | P2-09 |
 
-Detailed phase-2 plan: `docs/PHASE2_EXPANSION_PLAN.md`
+Подробный план этапа 2: `docs/PHASE2_EXPANSION_PLAN.md`
 
 ---
 
