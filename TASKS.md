@@ -52,11 +52,11 @@
 | H-01 | HabitEntity + HabitCheckEntity + HabitDao | Builder | DONE | F-03 |
 | H-02 | HabitRepository + CreateHabit + ArchiveHabit + GetActiveHabits use cases | Builder | DONE | H-01 |
 | H-03 | CheckHabitToday + GetHabitStreak + GetHabitHistory use cases | Builder | DONE | H-02 |
-| H-04 | HabitsViewModel + HabitsUiState | Builder | TODO | H-02, H-03 |
-| H-05 | HabitsScreen — список привычек + создание (bottom sheet) | Builder | TODO | H-04, F-05 |
-| H-06 | HabitDetailScreen — история + стрик | Builder | TODO | H-04 |
-| H-07 | Unit-тесты: streak calculation, check-in logic | Test | TODO | H-03 |
-| H-08 | WorkManager: HabitReminderWorker (вечернее напоминание) | Builder | TODO | H-02 |
+| H-04 | HabitsViewModel + HabitsUiState | Builder | DONE | H-02, H-03 |
+| H-05 | HabitsScreen — список привычек + создание (bottom sheet) | Builder | DONE | H-04, F-05 |
+| H-06 | HabitDetailScreen — история + стрик | Builder | DONE | H-04 |
+| H-07 | Unit-тесты: streak calculation, check-in logic | Test | DONE | H-03 |
+| H-08 | WorkManager: HabitReminderWorker (вечернее напоминание) | Builder | DONE | H-02 |
 
 ---
 
@@ -67,12 +67,12 @@
 | FA-01 | FastingSessionEntity + FastingDao | Builder | DONE | F-03 |
 | FA-02 | FastingRepository + StartFasting + StopFasting + GetActiveSession use cases | Builder | DONE | FA-01 |
 | FA-03 | GetFastingHistory + CalculateRemainingTime use cases | Builder | DONE | FA-02 |
-| FA-04 | FastingViewModel + FastingUiState | Builder | TODO | FA-02, FA-03 |
-| FA-05 | FastingBottomSheet — выбор режима + старт | Builder | TODO | FA-04, F-05 |
-| FA-06 | FastingTimerWidget — активный таймер (для Today и отдельного экрана) | Builder | TODO | FA-04 |
-| FA-07 | FastingHistoryScreen | Builder | TODO | FA-04 |
-| FA-08 | Unit-тесты: time calculation, session state machine | Test | TODO | FA-02, FA-03 |
-| FA-09 | WorkManager: FastingCompletionWorker (уведомление по окончании) | Builder | TODO | FA-02 |
+| FA-04 | FastingViewModel + FastingUiState | Builder | DONE | FA-02, FA-03 |
+| FA-05 | FastingBottomSheet — выбор режима + старт | Builder | DONE | FA-04, F-05 |
+| FA-06 | FastingTimerWidget — активный таймер (для Today и отдельного экрана) | Builder | DONE | FA-04 |
+| FA-07 | FastingHistoryScreen | Builder | DONE | FA-04 |
+| FA-08 | Unit-тесты: time calculation, session state machine | Test | DONE | FA-02, FA-03 |
+| FA-09 | WorkManager: FastingCompletionWorker (уведомление по окончании) | Builder | DONE | FA-02 |
 
 ---
 
@@ -83,10 +83,10 @@
 | C-01 | CyclePeriodEntity + CycleDayLogEntity + CycleDao | Builder | DONE | F-03 |
 | C-02 | CycleRepository + LogPeriodStart + LogPeriodEnd + GetCurrentCycleDay use cases | Builder | DONE | C-01 |
 | C-03 | PredictNextPeriod + GetCycleDayLog + SaveCycleDayLog use cases | Builder | DONE | C-02 |
-| C-04 | CycleViewModel + CycleUiState | Builder | TODO | C-02, C-03 |
-| C-05 | CycleCalendarScreen — календарь с отметками | Builder | TODO | C-04, F-05 |
-| C-06 | CycleDayJournalScreen — дневник дня (выделения, симптомы, настроение, заметка) | Builder | TODO | C-04 |
-| C-07 | Unit-тесты: cycle day calculation, period prediction | Test | TODO | C-02, C-03 |
+| C-04 | CycleViewModel + CycleUiState | Builder | DONE | C-02, C-03 |
+| C-05 | CycleCalendarScreen — календарь с отметками | Builder | DONE | C-04, F-05 |
+| C-06 | CycleDayJournalScreen — дневник дня (выделения, симптомы, настроение, заметка) | Builder | DONE | C-04 |
+| C-07 | Unit-тесты: cycle day calculation, period prediction | Test | DONE | C-02, C-03 |
 
 ---
 
@@ -111,8 +111,8 @@
 
 | # | Задача | Owner | Статус | Зависит от |
 |---|---|---|---|---|
-| T-01 | TodayState domain model + HomeAggregator use case | Builder | TODO | W-02, H-03, FA-02, C-02, ST-04 |
-| T-02 | HomeViewModel + flow combination | Builder | TODO | T-01 |
+| T-01 | TodayState domain model + HomeAggregator use case | Builder | DONE | W-02, H-03, FA-02, C-02, ST-04 |
+| T-02 | HomeViewModel + flow combination | Builder | DONE | T-01 |
 | T-03 | TodayScreen — сборка пяти блоков | Builder | TODO | T-02, F-05 |
 | T-04 | TodayScreen: CycleWidget (день цикла, фаза) | Builder | TODO | T-03 |
 | T-05 | TodayScreen: WaterWidget (прогресс + быстрый лог) | Builder | TODO | T-03, W-05 |
