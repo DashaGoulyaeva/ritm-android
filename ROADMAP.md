@@ -46,3 +46,15 @@
 - Wear OS.
 
 Полный список и статусы задач: [TASKS.md](./TASKS.md).
+
+## MVP release loop (human + AI agent)
+
+- Manual validation scenarios are fixed in `docs/HUMAN_VERIFICATION.md`.
+- AI APK build/report protocol is fixed in `docs/APK_DELIVERY_RUNBOOK.md`.
+- This loop starts right after MVP functional TODOs are closed.
+
+## Phase 2 after MVP
+
+- Expansion plan is fixed in `docs/PHASE2_EXPANSION_PLAN.md`.
+- Order: human feedback -> prioritization -> stability/polish -> store readiness -> closed test -> public release.
+

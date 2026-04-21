@@ -137,6 +137,46 @@
 
 ---
 
+
+## Stage 7: MVP Release Loop (human check + AI APK build)
+
+| # | Task | Owner | Status | Depends on |
+|---|---|---|---|---|
+| R-01 | Freeze MVP scope and sync DONE/TODO in TASKS.md | Lead | TODO | Stages 0-6 |
+| R-02 | Finalize manual verification checklist and pass/fail rules | Product + Test | TODO | R-01 |
+| R-03 | Run human smoke (HV-01..HV-04) on current APK | Test + Human | TODO | R-02 |
+| R-04 | Run module manual checks (HV-05..HV-08 as modules become ready) | Test + Human | TODO | R-03 |
+| R-05 | Register bugs from human pass and prioritize them | Lead + Reviewer | TODO | R-03, R-04 |
+| R-06 | Fix blocker/high issues before baseline APK build | Builder | TODO | R-05 |
+| R-07 | AI agent runs `:app:assembleDebug` and `qualityCheck` | Lead Agent | TODO | R-06 |
+| R-08 | AI agent posts unified report + APK artifact path | Docs Agent | TODO | R-07 |
+| R-09 | Human installs APK on device and confirms final smoke-pass | Human | TODO | R-08 |
+| R-10 | Publish MVP baseline and open Stage 2 queue | Lead | TODO | R-09 |
+
+Manual verification checklist: `docs/HUMAN_VERIFICATION.md`  
+AI APK build/report runbook: `docs/APK_DELIVERY_RUNBOOK.md`
+
+---
+
+## Stage 8: Post-MVP expansion (phase 2)
+
+| # | Task | Owner | Status | Depends on |
+|---|---|---|---|---|
+| P2-01 | Collect and normalize human feedback after MVP | Product | TODO | R-10 |
+| P2-02 | Prioritize feedback (impact/effort) and create release backlog | Lead + Product | TODO | P2-01 |
+| P2-03 | UX polish pass for key screens | Builder + Designer | TODO | P2-02 |
+| P2-04 | Stability sprint (crash/ANR/edge cases) | Builder + Test | TODO | P2-02 |
+| P2-05 | Local data export/backup strategy | Builder | TODO | P2-02 |
+| P2-06 | Privacy-first analytics baseline | Architect + Builder | TODO | P2-02 |
+| P2-07 | Release signing and versioning setup for stores | Lead + Builder | TODO | P2-04 |
+| P2-08 | Store assets (icon, screenshots, descriptions, policy text) | Product + Docs | TODO | P2-07 |
+| P2-09 | Closed testing in store + quality report | Test + Lead | TODO | P2-08 |
+| P2-10 | Public release + post-release monitoring | Lead | TODO | P2-09 |
+
+Detailed phase-2 plan: `docs/PHASE2_EXPANSION_PLAN.md`
+
+---
+
 ## Post-MVP backlog
 
 *(Не реализовывать без явного решения лида проекта)*
