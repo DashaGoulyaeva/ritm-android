@@ -30,6 +30,7 @@ ritm-android/
 ├── feature-cycle/          ← Cycle calendar, day journal, prediction
 ├── feature-water/          ← Water log, daily goal, history
 ├── feature-fasting/        ← Session management, timer, history
+├── feature-steps/          ← Daily steps, sensor ingestion, history
 ├── feature-habits/         ← Habit CRUD, check-in, streak, history
 └── feature-settings/       ← Reminders, goals, preferences
 ```
@@ -120,6 +121,12 @@ feature-X/
     val actualEndDateTime: Long?,
     val status: FastingStatus   // ACTIVE | COMPLETED | CANCELLED
 )
+
+@Entity data class StepDailyEntity(
+    @PrimaryKey val date: String, // "yyyy-MM-dd"
+    val steps: Int,
+    val source: String            // SENSOR | MANUAL_BASELINE
+)
 ```
 
 ---
@@ -134,7 +141,8 @@ data class TodayState(
     val cyclePhase: CyclePhase?,
     val fastingStatus: FastingWidgetState,
     val waterProgress: WaterProgress,
-    val habits: List<HabitItem>
+    val habits: List<HabitItem>,
+    val stepsProgress: StepsProgress
 )
 ```
 
@@ -158,6 +166,7 @@ sealed class Screen(val route: String) {
 Bottom navigation bar: Today | Привычки | Цикл | (История) | Настройки
 
 Fasting и Вода — через bottom sheet из Today, без отдельной вкладки в навигации.
+Шаги — блок на Today + отдельный экран истории шагов без отдельной top-level вкладки.
 
 ---
 
@@ -170,6 +179,7 @@ Fasting и Вода — через bottom sheet из Today, без отдель�
 - `reminder_water_time: String` ("HH:mm")
 - `reminder_habits_enabled: Boolean`
 - `reminder_habits_time: String`
+- `steps_daily_goal: Int` (опционально для дальнейшей полировки, default: 8000)
 
 ---
 

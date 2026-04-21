@@ -90,19 +90,37 @@
 
 ---
 
+## Этап 4.5: Шаги (MVP без внешних синхронизаций)
+
+| # | Задача | Owner | Статус | Зависит от |
+|---|---|---|---|---|
+| P-ST-01 | Mini-spec: шаги (Today + история + edge cases) | Product | TODO | — |
+| A-ST-01 | Technical note/ADR: contracts для шагов | Architect | TODO | P-ST-01 |
+| ST-01 | StepDailyEntity + StepsDao + Room migration | Builder | TODO | F-03, A-ST-01 |
+| ST-02 | StepsSensorDataSource + permission check (`ACTIVITY_RECOGNITION`) | Builder | TODO | A-ST-01 |
+| ST-03 | StepsRepository (sensor + local day baseline/cache) | Builder | TODO | ST-01, ST-02 |
+| ST-04 | Use cases: ObserveTodaySteps + GetStepsHistory | Builder | TODO | ST-03 |
+| ST-05 | StepsViewModel + StepsUiState | Builder | TODO | ST-04 |
+| ST-06 | StepsTodayWidget (интеграция на Today) | Builder | TODO | ST-05, F-05 |
+| ST-07 | StepsHistoryScreen + navigation route | Builder | TODO | ST-05, F-06 |
+| T-ST-01 | Unit/DAO/UI smoke tests + edge cases по шагам | Test | TODO | ST-06, ST-07 |
+
+---
+
 ## Этап 5: Интеграция (Today screen)
 
 | # | Задача | Owner | Статус | Зависит от |
 |---|---|---|---|---|
-| T-01 | TodayState domain model + HomeAggregator use case | Builder | TODO | W-02, H-03, FA-02, C-02 |
+| T-01 | TodayState domain model + HomeAggregator use case | Builder | TODO | W-02, H-03, FA-02, C-02, ST-04 |
 | T-02 | HomeViewModel + flow combination | Builder | TODO | T-01 |
-| T-03 | TodayScreen — сборка четырёх блоков | Builder | TODO | T-02, F-05 |
+| T-03 | TodayScreen — сборка пяти блоков | Builder | TODO | T-02, F-05 |
 | T-04 | TodayScreen: CycleWidget (день цикла, фаза) | Builder | TODO | T-03 |
 | T-05 | TodayScreen: WaterWidget (прогресс + быстрый лог) | Builder | TODO | T-03, W-05 |
 | T-06 | TodayScreen: FastingWidget (статус/таймер) | Builder | TODO | T-03, FA-05 |
 | T-07 | TodayScreen: HabitsWidget (список + отметка) | Builder | TODO | T-03 |
-| T-08 | Empty states для каждого блока (нет данных) | Builder | TODO | T-03 |
-| T-09 | UI smoke tests: Today screen flow | Test | TODO | T-03 |
+| T-08 | TodayScreen: StepsWidget (шаги за день + fallback) | Builder | TODO | T-03, ST-06 |
+| T-09 | Empty states для каждого блока (нет данных) | Builder | TODO | T-03 |
+| T-10 | UI smoke tests: Today screen flow | Test | TODO | T-03 |
 
 ---
 

@@ -19,6 +19,7 @@ core-ui
 core-database
 feature-home
 feature-water
+feature-steps
 feature-habits
 feature-fasting
 feature-cycle
@@ -51,14 +52,14 @@ Room/DataStore -> Repository -> UseCase -> ViewModel -> Compose UI
 - `Настройки`
 
 На текущем этапе fully-functional реализован water-поток (включая экран истории и настройки воды).  
-Остальные домены постепенно подключаются по roadmap.
+Остальные домены постепенно подключаются по roadmap, включая шаги (локально, без внешних синков).
 
 ## Текущее покрытие реализации (20 апреля 2026)
 
 - ✅ Foundation: готов
 - ✅ Water: готов
 - 🟡 Settings: реализован water-сегмент
-- ⏳ Habits / Fasting / Cycle: в разработке
+- ⏳ Habits / Fasting / Cycle / Steps: в разработке
 - ⏳ Полный агрегатор Today: в разработке
 
 ## Нефункциональные рамки
@@ -67,3 +68,4 @@ Room/DataStore -> Repository -> UseCase -> ViewModel -> Compose UI
 - compile/targetSdk: 35
 - локальное хранение данных на устройстве
 - без облачной синхронизации и AI в MVP
+- шаги в MVP без Google Fit / Health Connect
