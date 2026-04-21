@@ -28,6 +28,10 @@ dependencies {
     implementation(project(":core-common"))
     implementation(project(":core-ui"))
     implementation(project(":core-database"))
+    implementation(project(":feature-water"))
+    implementation(project(":feature-habits"))
+    implementation(project(":feature-fasting"))
+    implementation(project(":feature-cycle"))
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(platform(libs.androidx.compose.bom))

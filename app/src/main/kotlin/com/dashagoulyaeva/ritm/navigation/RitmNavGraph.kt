@@ -8,9 +8,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.dashagoulyaeva.ritm.feature.cycle.presentation.cycleCalendarScreen
+import com.dashagoulyaeva.ritm.feature.cycle.presentation.cycleDayJournalScreen
+import com.dashagoulyaeva.ritm.feature.fasting.presentation.fastingHistoryScreen
+import com.dashagoulyaeva.ritm.feature.habits.presentation.habitDetailScreen
+import com.dashagoulyaeva.ritm.feature.habits.presentation.habitsScreen
 import com.dashagoulyaeva.ritm.feature.settings.presentation.waterSettingsScreen
 import com.dashagoulyaeva.ritm.feature.water.presentation.waterHistoryScreen
 import com.dashagoulyaeva.ritm.navigation.components.ritmBottomBar
@@ -39,10 +46,28 @@ fun ritmNavGraph() {
                 )
             }
             composable(TopLevelDestination.HABITS.route) {
-                placeholderScreen("РџСЂРёРІС‹С‡РєРё")
+                habitsScreen(onHabitClick = { id -> navController.navigate("habit_detail/$id") })
+            }
+            composable(
+                route = "habit_detail/{habitId}",
+                arguments = listOf(navArgument("habitId") { type = NavType.LongType }),
+            ) {
+                habitDetailScreen(
+                    onBack = { navController.popBackStack() },
+                    onArchived = { navController.popBackStack() },
+                )
             }
             composable(TopLevelDestination.CYCLE.route) {
-                placeholderScreen("Р¦РёРєР»")
+                cycleCalendarScreen(onDayClick = { date -> navController.navigate("cycle_journal/$date") })
+            }
+            composable(
+                route = "cycle_journal/{date}",
+                arguments = listOf(navArgument("date") { type = NavType.StringType }),
+            ) { backStack ->
+                cycleDayJournalScreen(
+                    date = backStack.arguments?.getString("date") ?: "",
+                    onBack = { navController.popBackStack() },
+                )
             }
             composable(TopLevelDestination.SETTINGS.route) {
                 waterSettingsScreen()
@@ -51,6 +76,9 @@ fun ritmNavGraph() {
                 waterHistoryScreen(
                     onBackClick = { navController.popBackStack() },
                 )
+            }
+            composable("fasting_history") {
+                fastingHistoryScreen(onBack = { navController.popBackStack() })
             }
         }
     }
