@@ -103,7 +103,7 @@
 | ST-05 | StepsViewModel + StepsUiState | Builder | DONE | ST-04 |
 | ST-06 | StepsTodayWidget (интеграция на Today) | Builder | DONE | ST-05, F-05 |
 | ST-07 | StepsHistoryScreen + navigation route | Builder | DONE | ST-05, F-06 |
-| T-ST-01 | Unit/DAO/UI smoke tests + edge cases по шагам | Test | TODO | ST-06, ST-07 |
+| T-ST-01 | Unit/DAO/UI smoke tests + edge cases по шагам | Test | DONE | ST-06, ST-07 |
 
 ---
 
@@ -120,7 +120,7 @@
 | T-07 | TodayScreen: HabitsWidget (список + отметка) | Builder | DONE | T-03 |
 | T-08 | TodayScreen: StepsWidget (шаги за день + fallback) | Builder | DONE | T-03, ST-06 |
 | T-09 | Empty states для каждого блока (нет данных) | Builder | DONE | T-03 |
-| T-10 | UI smoke tests: Today screen flow | Test | TODO | T-03 |
+| T-10 | UI smoke tests: Today screen flow | Test | DONE | T-03 |
 
 ---
 
