@@ -97,12 +97,12 @@
 | P-ST-01 | Mini-spec: шаги (Today + история + edge cases) | Product | TODO | — |
 | A-ST-01 | Technical note/ADR: contracts для шагов | Architect | TODO | P-ST-01 |
 | ST-01 | StepDailyEntity + StepsDao + Room migration | Builder | DONE | F-03, A-ST-01 |
-| ST-02 | StepsSensorDataSource + permission check (`ACTIVITY_RECOGNITION`) | Builder | TODO | A-ST-01 |
-| ST-03 | StepsRepository (sensor + local day baseline/cache) | Builder | TODO | ST-01, ST-02 |
-| ST-04 | Use cases: ObserveTodaySteps + GetStepsHistory | Builder | TODO | ST-03 |
-| ST-05 | StepsViewModel + StepsUiState | Builder | TODO | ST-04 |
-| ST-06 | StepsTodayWidget (интеграция на Today) | Builder | TODO | ST-05, F-05 |
-| ST-07 | StepsHistoryScreen + navigation route | Builder | TODO | ST-05, F-06 |
+| ST-02 | StepsSensorDataSource + permission check (`ACTIVITY_RECOGNITION`) | Builder | DONE | A-ST-01 |
+| ST-03 | StepsRepository (sensor + local day baseline/cache) | Builder | DONE | ST-01, ST-02 |
+| ST-04 | Use cases: ObserveTodaySteps + GetStepsHistory | Builder | DONE | ST-03 |
+| ST-05 | StepsViewModel + StepsUiState | Builder | DONE | ST-04 |
+| ST-06 | StepsTodayWidget (интеграция на Today) | Builder | DONE | ST-05, F-05 |
+| ST-07 | StepsHistoryScreen + navigation route | Builder | DONE | ST-05, F-06 |
 | T-ST-01 | Unit/DAO/UI smoke tests + edge cases по шагам | Test | TODO | ST-06, ST-07 |
 
 ---
@@ -113,13 +113,13 @@
 |---|---|---|---|---|
 | T-01 | TodayState domain model + HomeAggregator use case | Builder | DONE | W-02, H-03, FA-02, C-02, ST-04 |
 | T-02 | HomeViewModel + flow combination | Builder | DONE | T-01 |
-| T-03 | TodayScreen — сборка пяти блоков | Builder | TODO | T-02, F-05 |
-| T-04 | TodayScreen: CycleWidget (день цикла, фаза) | Builder | TODO | T-03 |
-| T-05 | TodayScreen: WaterWidget (прогресс + быстрый лог) | Builder | TODO | T-03, W-05 |
-| T-06 | TodayScreen: FastingWidget (статус/таймер) | Builder | TODO | T-03, FA-05 |
-| T-07 | TodayScreen: HabitsWidget (список + отметка) | Builder | TODO | T-03 |
-| T-08 | TodayScreen: StepsWidget (шаги за день + fallback) | Builder | TODO | T-03, ST-06 |
-| T-09 | Empty states для каждого блока (нет данных) | Builder | TODO | T-03 |
+| T-03 | TodayScreen — сборка пяти блоков | Builder | DONE | T-02, F-05 |
+| T-04 | TodayScreen: CycleWidget (день цикла, фаза) | Builder | DONE | T-03 |
+| T-05 | TodayScreen: WaterWidget (прогресс + быстрый лог) | Builder | DONE | T-03, W-05 |
+| T-06 | TodayScreen: FastingWidget (статус/таймер) | Builder | DONE | T-03, FA-05 |
+| T-07 | TodayScreen: HabitsWidget (список + отметка) | Builder | DONE | T-03 |
+| T-08 | TodayScreen: StepsWidget (шаги за день + fallback) | Builder | DONE | T-03, ST-06 |
+| T-09 | Empty states для каждого блока (нет данных) | Builder | DONE | T-03 |
 | T-10 | UI smoke tests: Today screen flow | Test | TODO | T-03 |
 
 ---
@@ -130,10 +130,10 @@
 |---|---|---|---|---|
 | S-01 | SettingsScreen — структура + навигация | Builder | DONE | F-06 |
 | S-02 | Настройки воды (цель в стаканах, напоминание) | Builder | DONE | S-01, W-03, W-08 |
-| S-03 | Настройки fasting (режим по умолчанию) | Builder | TODO | S-01, FA-02 |
-| S-04 | Настройки привычек (список, архив) | Builder | TODO | S-01, H-02 |
-| S-05 | Настройки напоминаний (вкл/выкл, время) | Builder | TODO | S-01 |
-| S-06 | Onboarding (первый запуск — минимальный) | Builder | TODO | F-06 |
+| S-03 | Настройки fasting (режим по умолчанию) | Builder | DONE | S-01, FA-02 |
+| S-04 | Настройки привычек (список, архив) | Builder | DONE | S-01, H-02 |
+| S-05 | Настройки напоминаний (вкл/выкл, время) | Builder | DONE | S-01 |
+| S-06 | Onboarding (первый запуск — минимальный) | Builder | DONE | F-06 |
 
 ---
 

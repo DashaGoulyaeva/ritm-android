@@ -14,10 +14,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.dashagoulyaeva.ritm.feature.cycle.presentation.cycleCalendarScreen
+import com.dashagoulyaeva.ritm.feature.home.presentation.stepsHistoryScreen
+import com.dashagoulyaeva.ritm.feature.home.presentation.todayScreen
 import com.dashagoulyaeva.ritm.feature.cycle.presentation.cycleDayJournalScreen
 import com.dashagoulyaeva.ritm.feature.fasting.presentation.fastingHistoryScreen
 import com.dashagoulyaeva.ritm.feature.habits.presentation.habitDetailScreen
 import com.dashagoulyaeva.ritm.feature.habits.presentation.habitsScreen
+import com.dashagoulyaeva.ritm.feature.settings.presentation.fastingSettingsScreen
+import com.dashagoulyaeva.ritm.feature.settings.presentation.habitsSettingsScreen
+import com.dashagoulyaeva.ritm.feature.settings.presentation.onboardingScreen
+import com.dashagoulyaeva.ritm.feature.settings.presentation.reminderSettingsScreen
 import com.dashagoulyaeva.ritm.feature.settings.presentation.settingsScreen
 import com.dashagoulyaeva.ritm.feature.settings.presentation.waterSettingsScreen
 import com.dashagoulyaeva.ritm.feature.water.presentation.waterHistoryScreen
@@ -71,7 +77,30 @@ fun ritmNavGraph() {
                 )
             }
             composable(TopLevelDestination.SETTINGS.route) {
-                settingsScreen(onWaterSettingsClick = { navController.navigate("water_settings") })
+                settingsScreen(
+                    onWaterSettingsClick = { navController.navigate("water_settings") },
+                    onFastingSettingsClick = { navController.navigate("fasting_settings") },
+                    onHabitsSettingsClick = { navController.navigate("habits_settings") },
+                    onReminderSettingsClick = { navController.navigate("reminder_settings") },
+                )
+            }
+            composable("fasting_settings") {
+                fastingSettingsScreen(onBack = { navController.popBackStack() })
+            }
+            composable("habits_settings") {
+                habitsSettingsScreen(onBack = { navController.popBackStack() })
+            }
+            composable("reminder_settings") {
+                reminderSettingsScreen(onBack = { navController.popBackStack() })
+            }
+            composable("onboarding") {
+                onboardingScreen(
+                    onFinish = {
+                        navController.navigate("today") {
+                            popUpTo("onboarding") { inclusive = true }
+                        }
+                    },
+                )
             }
             composable(WATER_HISTORY_ROUTE) {
                 waterHistoryScreen(
@@ -80,6 +109,9 @@ fun ritmNavGraph() {
             }
             composable("fasting_history") {
                 fastingHistoryScreen(onBack = { navController.popBackStack() })
+            }
+            composable("steps_history") {
+                stepsHistoryScreen(onBack = { navController.popBackStack() })
             }
         }
     }

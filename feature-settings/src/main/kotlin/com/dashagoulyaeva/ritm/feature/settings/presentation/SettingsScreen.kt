@@ -26,6 +26,9 @@ import com.dashagoulyaeva.ritm.core.ui.theme.spacing
 @Composable
 fun settingsScreen(
     onWaterSettingsClick: () -> Unit,
+    onFastingSettingsClick: () -> Unit = {},
+    onHabitsSettingsClick: () -> Unit = {},
+    onReminderSettingsClick: () -> Unit = {},
     onAboutClick: () -> Unit = {},
 ) {
     Scaffold(
@@ -43,6 +46,36 @@ fun settingsScreen(
                     modifier = Modifier.padding(vertical = MaterialTheme.spacing.sm),
                 )
                 settingsItem(title = "Настройки воды", subtitle = "Цель, напоминания", onClick = onWaterSettingsClick)
+                HorizontalDivider()
+            }
+            item {
+                Text(
+                    text = "Голодание",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(vertical = MaterialTheme.spacing.sm),
+                )
+                settingsItem(title = "Настройки голодания", subtitle = "Режим по умолчанию", onClick = onFastingSettingsClick)
+                HorizontalDivider()
+            }
+            item {
+                Text(
+                    text = "Привычки",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(vertical = MaterialTheme.spacing.sm),
+                )
+                settingsItem(title = "Настройки привычек", subtitle = "Архив привычек", onClick = onHabitsSettingsClick)
+                HorizontalDivider()
+            }
+            item {
+                Text(
+                    text = "Напоминания",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(vertical = MaterialTheme.spacing.sm),
+                )
+                settingsItem(title = "Напоминания", subtitle = "Привычки, голодание", onClick = onReminderSettingsClick)
                 HorizontalDivider()
             }
             item {
