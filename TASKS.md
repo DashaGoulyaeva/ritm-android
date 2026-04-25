@@ -148,6 +148,7 @@
 | D4-04 | Core-ui primitives: rhythm colors, soft surfaces, RitmBanner, RhythmOrb | Builder | DONE | D4-03 |
 | D4-05 | Today/Steps/Fasting v4: общий статус дня, fallback шагов, смена fasting-окна | Builder | DONE | D4-04 |
 | D4-06 | Quality gate cleanup: навигация и формат core-database, выявить остаточный detekt-долг | Lead | DONE | D4-05 |
+| D4-07 | Закрыть полный quality gate: `qualityCheck` + `:app:assembleDebug` после применения v4 | Lead + Test | DONE | D4-06 |
 
 ---
 
