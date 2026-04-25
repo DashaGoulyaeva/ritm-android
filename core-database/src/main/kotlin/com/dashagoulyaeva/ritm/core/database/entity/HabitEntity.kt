@@ -10,8 +10,8 @@ data class HabitEntity(
     val description: String = "",
     val iconEmoji: String = "✅",
     val colorHex: String = "#66BB6A",
-    val targetDays: String = "1111111", // 7 chars, Mon-Sun, "1"=active
-    val reminderTime: String? = null, // "HH:mm" or null
+    val targetDays: String = "1111111",
+    val reminderTime: String? = null,
     val isArchived: Boolean = false,
     val createdAt: Long = System.currentTimeMillis(),
 )

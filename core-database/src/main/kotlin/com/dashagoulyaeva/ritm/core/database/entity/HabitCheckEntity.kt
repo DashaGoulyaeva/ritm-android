@@ -7,17 +7,19 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "habit_checks",
-    foreignKeys = [ForeignKey(
-        entity = HabitEntity::class,
-        parentColumns = ["id"],
-        childColumns = ["habitId"],
-        onDelete = ForeignKey.CASCADE,
-    )],
+    foreignKeys = [
+        ForeignKey(
+            entity = HabitEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["habitId"],
+            onDelete = ForeignKey.CASCADE,
+        ),
+    ],
     indices = [Index(value = ["habitId"])],
 )
 data class HabitCheckEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val habitId: Long,
-    val date: String, // "yyyy-MM-dd"
+    val date: String,
     val completedAt: Long = System.currentTimeMillis(),
 )

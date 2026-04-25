@@ -29,5 +29,9 @@ interface FastingDao {
     suspend fun updateSession(session: FastingSessionEntity)
 
     @Query("UPDATE fasting_sessions SET status = :status, actualEndAt = :endAt WHERE id = :id")
-    suspend fun endSession(id: Long, status: FastingStatus, endAt: Long)
+    suspend fun endSession(
+        id: Long,
+        status: FastingStatus,
+        endAt: Long,
+    )
 }
