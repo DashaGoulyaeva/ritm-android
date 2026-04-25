@@ -29,6 +29,9 @@ interface CycleDao {
     @Update
     suspend fun updatePeriod(period: CyclePeriodEntity)
 
+    @Query("UPDATE cycle_periods SET endDate = :endDate WHERE id = :id")
+    suspend fun endPeriodById(id: Long, endDate: String)
+
     @Query("SELECT * FROM cycle_day_logs WHERE date = :date LIMIT 1")
     suspend fun getLogForDate(date: String): CycleDayLogEntity?
 

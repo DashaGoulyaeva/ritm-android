@@ -23,6 +23,7 @@ import com.dashagoulyaeva.ritm.feature.settings.presentation.habitsSettingsScree
 import com.dashagoulyaeva.ritm.feature.settings.presentation.onboardingScreen
 import com.dashagoulyaeva.ritm.feature.settings.presentation.reminderSettingsScreen
 import com.dashagoulyaeva.ritm.feature.settings.presentation.settingsScreen
+import com.dashagoulyaeva.ritm.feature.settings.presentation.waterSettingsScreen
 import com.dashagoulyaeva.ritm.feature.water.presentation.waterHistoryScreen
 import com.dashagoulyaeva.ritm.navigation.components.ritmBottomBar
 
@@ -104,6 +105,9 @@ private fun NavGraphBuilder.settingsRoutes(navController: NavHostController) {
             onHabitsSettingsClick = { navController.navigate("habits_settings") },
             onReminderSettingsClick = { navController.navigate("reminder_settings") },
         )
+    }
+    composable("water_settings") {
+        waterSettingsScreen(onBack = { navController.popBackStack() })
     }
     composable("fasting_settings") {
         fastingSettingsScreen(onBack = { navController.popBackStack() })

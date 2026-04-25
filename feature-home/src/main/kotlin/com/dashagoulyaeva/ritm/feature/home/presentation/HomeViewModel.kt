@@ -3,6 +3,7 @@ package com.dashagoulyaeva.ritm.feature.home.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dashagoulyaeva.ritm.core.database.entity.WaterType
+import com.dashagoulyaeva.ritm.feature.fasting.domain.usecase.StopFasting
 import com.dashagoulyaeva.ritm.feature.habits.domain.usecase.CheckHabitToday
 import com.dashagoulyaeva.ritm.feature.home.domain.usecase.HomeAggregator
 import com.dashagoulyaeva.ritm.feature.water.domain.usecase.AddWaterEntry
@@ -22,6 +23,7 @@ class HomeViewModel
         private val homeAggregator: HomeAggregator,
         private val addWaterEntry: AddWaterEntry,
         private val checkHabitToday: CheckHabitToday,
+        private val stopFasting: StopFasting,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(HomeUiState())
         val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
@@ -44,6 +46,11 @@ class HomeViewModel
             checked: Boolean,
         ) {
             viewModelScope.launch { checkHabitToday(habitId, today, checked) }
+        }
+
+        fun stopFasting() {
+            val sessionId = _uiState.value.todayState.activeFastingSession?.id ?: return
+            viewModelScope.launch { stopFasting.invoke(sessionId) }
         }
 
         fun showFastingSheet() {

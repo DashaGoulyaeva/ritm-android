@@ -38,8 +38,7 @@ class CycleRepositoryImpl
             periodId: Long,
             endDate: String,
         ) {
-            val existing = cycleDao.getActivePeriodOnce() ?: return
-            cycleDao.updatePeriod(existing.copy(endDate = endDate))
+            cycleDao.endPeriodById(periodId, endDate)
         }
 
         override suspend fun getLogForDate(date: String): CycleDayLog? = cycleDao.getLogForDate(date)?.toDomain()

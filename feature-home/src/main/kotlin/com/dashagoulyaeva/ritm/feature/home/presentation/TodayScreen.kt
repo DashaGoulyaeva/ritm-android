@@ -122,6 +122,7 @@ fun todayScreen(
                     remainingMs = today.fastingRemainingMs,
                     isActive = today.activeFastingSession != null,
                     onStartClick = { viewModel.showFastingSheet() },
+                    onStopClick = { viewModel.stopFasting() },
                 )
             }
 
@@ -322,6 +323,7 @@ private fun fastingWidget(
     remainingMs: Long?,
     isActive: Boolean,
     onStartClick: () -> Unit,
+    onStopClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ritmSectionCard(modifier = modifier.fillMaxWidth()) {
@@ -343,6 +345,10 @@ private fun fastingWidget(
                     text = "Сменить окно",
                     onClick = onStartClick,
                 )
+                ritmButton(
+                    text = "Остановить",
+                    onClick = onStopClick,
+                )
             } else if (isActive) {
                 Text(
                     text = "Сессия активна",
@@ -351,6 +357,10 @@ private fun fastingWidget(
                 ritmButton(
                     text = "Сменить окно",
                     onClick = onStartClick,
+                )
+                ritmButton(
+                    text = "Остановить",
+                    onClick = onStopClick,
                 )
             } else {
                 ritmButton(
