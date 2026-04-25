@@ -11,7 +11,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class CycleDatabaseModule {
-
     @Binds
     @Singleton
     abstract fun bindCycleRepository(impl: CycleRepositoryImpl): CycleRepository

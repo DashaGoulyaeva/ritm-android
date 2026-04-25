@@ -42,10 +42,11 @@ fun habitsSettingsScreen(onBack: () -> Unit) {
         },
     ) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(horizontal = MaterialTheme.spacing.md),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .padding(horizontal = MaterialTheme.spacing.md),
         ) {
             habitsSettingsItem(
                 title = "Архив привычек",
@@ -58,12 +59,17 @@ fun habitsSettingsScreen(onBack: () -> Unit) {
 }
 
 @Composable
-private fun habitsSettingsItem(title: String, subtitle: String, onClick: () -> Unit) {
+private fun habitsSettingsItem(
+    title: String,
+    subtitle: String,
+    onClick: () -> Unit,
+) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(vertical = MaterialTheme.spacing.md),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+                .padding(vertical = MaterialTheme.spacing.md),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(modifier = Modifier.weight(1f)) {

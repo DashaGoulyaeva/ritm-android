@@ -1,6 +1,7 @@
 package com.dashagoulyaeva.ritm.feature.cycle.domain.model
 
 enum class FlowIntensity { NONE, LIGHT, MEDIUM, HEAVY }
+
 enum class MoodLevel { UNKNOWN, GREAT, GOOD, NEUTRAL, LOW, AWFUL }
 
 data class CycleDayLog(

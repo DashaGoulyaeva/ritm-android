@@ -25,9 +25,10 @@ import com.dashagoulyaeva.ritm.core.ui.theme.spacing
 @Composable
 fun onboardingScreen(onFinish: () -> Unit) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(MaterialTheme.spacing.lg),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(MaterialTheme.spacing.lg),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {

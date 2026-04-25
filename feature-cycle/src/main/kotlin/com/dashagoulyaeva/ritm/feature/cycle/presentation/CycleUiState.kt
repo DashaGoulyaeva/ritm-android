@@ -1,8 +1,8 @@
 package com.dashagoulyaeva.ritm.feature.cycle.presentation
 
 import com.dashagoulyaeva.ritm.feature.cycle.domain.model.CycleDayInfo
-import com.dashagoulyaeva.ritm.feature.cycle.domain.model.CyclePhase
 import com.dashagoulyaeva.ritm.feature.cycle.domain.model.CyclePeriod
+import com.dashagoulyaeva.ritm.feature.cycle.domain.model.CyclePhase
 
 data class CycleUiState(
     val currentDayInfo: CycleDayInfo = CycleDayInfo(0, CyclePhase.UNKNOWN, false),

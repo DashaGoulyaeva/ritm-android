@@ -32,6 +32,9 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+private const val HOUR_IN_MILLIS = 3_600_000L
+private const val MINUTE_IN_MILLIS = 60_000L
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun fastingHistoryScreen(
@@ -57,19 +60,21 @@ fun fastingHistoryScreen(
     ) { innerPadding ->
         if (uiState.sessions.isEmpty()) {
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
                 contentAlignment = Alignment.Center,
             ) {
                 Text("Нет завершённых сессий")
             }
         } else {
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(horizontal = MaterialTheme.spacing.md),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                        .padding(horizontal = MaterialTheme.spacing.md),
             ) {
                 items(uiState.sessions) { session ->
                     fastingSessionCard(session = session)
@@ -85,23 +90,26 @@ private fun fastingSessionCard(session: FastingSession) {
         Column(modifier = Modifier.padding(MaterialTheme.spacing.md)) {
             val duration =
                 (session.actualEndAt ?: System.currentTimeMillis()) - session.startedAt
-            val hours = duration / 3_600_000L
-            val minutes = (duration % 3_600_000L) / 60_000L
+            val hours = duration / HOUR_IN_MILLIS
+            val minutes = (duration % HOUR_IN_MILLIS) / MINUTE_IN_MILLIS
 
-            val dateFormatted = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
-                .format(Date(session.startedAt))
+            val dateFormatted =
+                SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+                    .format(Date(session.startedAt))
 
-            val statusColor = when (session.status) {
-                FastingStatus.COMPLETED -> FastingAccent
-                FastingStatus.CANCELLED -> MaterialTheme.colorScheme.error
-                FastingStatus.ACTIVE -> MaterialTheme.colorScheme.primary
-            }
+            val statusColor =
+                when (session.status) {
+                    FastingStatus.COMPLETED -> FastingAccent
+                    FastingStatus.CANCELLED -> MaterialTheme.colorScheme.error
+                    FastingStatus.ACTIVE -> MaterialTheme.colorScheme.primary
+                }
 
-            val statusText = when (session.status) {
-                FastingStatus.COMPLETED -> "Завершено"
-                FastingStatus.CANCELLED -> "Отменено"
-                FastingStatus.ACTIVE -> "Активно"
-            }
+            val statusText =
+                when (session.status) {
+                    FastingStatus.COMPLETED -> "Завершено"
+                    FastingStatus.CANCELLED -> "Отменено"
+                    FastingStatus.ACTIVE -> "Активно"
+                }
 
             Row(
                 modifier = Modifier.fillMaxWidth(),

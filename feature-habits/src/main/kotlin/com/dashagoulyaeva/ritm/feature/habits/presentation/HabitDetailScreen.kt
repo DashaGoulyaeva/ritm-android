@@ -35,6 +35,7 @@ import com.dashagoulyaeva.ritm.core.ui.theme.spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+@Suppress("LongMethod")
 fun habitDetailScreen(
     onBack: () -> Unit,
     onArchived: () -> Unit,
@@ -55,18 +56,20 @@ fun habitDetailScreen(
         },
     ) { padding ->
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding),
             contentPadding = PaddingValues(MaterialTheme.spacing.md),
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm),
         ) {
             item {
                 ritmCard(modifier = Modifier.fillMaxWidth()) {
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(MaterialTheme.spacing.md),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(MaterialTheme.spacing.md),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
@@ -102,9 +105,10 @@ fun habitDetailScreen(
             if (state.checks.isEmpty()) {
                 item {
                     Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(MaterialTheme.spacing.lg),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(MaterialTheme.spacing.lg),
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
@@ -117,9 +121,10 @@ fun habitDetailScreen(
                 items(state.checks, key = { it.id }) { check ->
                     ritmCard(modifier = Modifier.fillMaxWidth()) {
                         Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(MaterialTheme.spacing.md),
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(MaterialTheme.spacing.md),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically,
                         ) {

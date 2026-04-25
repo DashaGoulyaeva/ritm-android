@@ -38,10 +38,11 @@ fun createHabitBottomSheet(
         sheetState = sheetState,
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(MaterialTheme.spacing.md)
-                .padding(bottom = MaterialTheme.spacing.xl),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(MaterialTheme.spacing.md)
+                    .padding(bottom = MaterialTheme.spacing.xl),
         ) {
             Text(
                 text = "Новая привычка",

@@ -11,7 +11,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class FastingDatabaseModule {
-
     @Binds
     @Singleton
     abstract fun bindFastingRepository(impl: FastingRepositoryImpl): FastingRepository

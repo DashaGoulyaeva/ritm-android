@@ -42,7 +42,12 @@ import com.dashagoulyaeva.ritm.feature.water.presentation.WaterViewModel
 import com.dashagoulyaeva.ritm.feature.water.presentation.waterQuickLogBottomSheet
 import java.util.concurrent.TimeUnit
 
+private const val MAX_TODAY_HABITS = 3
+private const val MINUTES_PER_HOUR = 60
+private const val SECONDS_PER_MINUTE = 60
+
 @OptIn(ExperimentalMaterial3Api::class)
+@Suppress("LongMethod")
 @Composable
 fun todayScreen(
     onOpenWaterHistory: () -> Unit = {},
@@ -70,9 +75,10 @@ fun todayScreen(
         },
     ) { innerPadding ->
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
@@ -152,6 +158,7 @@ fun todayScreen(
     }
 }
 
+@Suppress("LongParameterList")
 @Composable
 private fun todayHero(
     waterCount: Int,
@@ -288,7 +295,7 @@ private fun habitsWidget(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             } else {
-                habits.take(3).forEach { habit ->
+                habits.take(MAX_TODAY_HABITS).forEach { habit ->
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm),
@@ -325,8 +332,8 @@ private fun fastingWidget(
             )
             if (isActive && remainingMs != null) {
                 val hours = TimeUnit.MILLISECONDS.toHours(remainingMs)
-                val minutes = TimeUnit.MILLISECONDS.toMinutes(remainingMs) % 60
-                val seconds = TimeUnit.MILLISECONDS.toSeconds(remainingMs) % 60
+                val minutes = TimeUnit.MILLISECONDS.toMinutes(remainingMs) % MINUTES_PER_HOUR
+                val seconds = TimeUnit.MILLISECONDS.toSeconds(remainingMs) % SECONDS_PER_MINUTE
                 Text(
                     text = "Осталось: %02d:%02d:%02d".format(hours, minutes, seconds),
                     style = MaterialTheme.typography.bodyLarge,
@@ -386,12 +393,13 @@ private fun cycleWidget(
     }
 }
 
-private fun CyclePhase.displayName(): String = when (this) {
-    CyclePhase.MENSTRUAL -> "Менструальная"
-    CyclePhase.FOLLICULAR -> "Фолликулярная"
-    CyclePhase.OVULATION -> "Овуляция"
-    CyclePhase.LUTEAL -> "Лютеиновая"
-    CyclePhase.UNKNOWN -> "Неизвестно"
-}
+private fun CyclePhase.displayName(): String =
+    when (this) {
+        CyclePhase.MENSTRUAL -> "Менструальная"
+        CyclePhase.FOLLICULAR -> "Фолликулярная"
+        CyclePhase.OVULATION -> "Овуляция"
+        CyclePhase.LUTEAL -> "Лютеиновая"
+        CyclePhase.UNKNOWN -> "Неизвестно"
+    }
 
 // ── T-08: Steps ───────────────────────────────────────────────────────────────

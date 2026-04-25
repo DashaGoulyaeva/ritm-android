@@ -42,10 +42,11 @@ fun fastingSettingsScreen(onBack: () -> Unit) {
         },
     ) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(horizontal = MaterialTheme.spacing.md),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .padding(horizontal = MaterialTheme.spacing.md),
         ) {
             fastingSettingsItem(
                 title = "Режим по умолчанию",
@@ -58,12 +59,17 @@ fun fastingSettingsScreen(onBack: () -> Unit) {
 }
 
 @Composable
-private fun fastingSettingsItem(title: String, subtitle: String, onClick: () -> Unit) {
+private fun fastingSettingsItem(
+    title: String,
+    subtitle: String,
+    onClick: () -> Unit,
+) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(vertical = MaterialTheme.spacing.md),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+                .padding(vertical = MaterialTheme.spacing.md),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(modifier = Modifier.weight(1f)) {

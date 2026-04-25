@@ -51,14 +51,15 @@ data class RitmRhythmColors(
     val onSoft: Color = InkOnLight,
 )
 
-fun RitmRhythm.colors(): RitmRhythmColors = when (this) {
-    RitmRhythm.Today -> RitmRhythmColors(Primary, PrimaryContainer)
-    RitmRhythm.Cycle -> RitmRhythmColors(CycleAccent, CycleSoft)
-    RitmRhythm.Fasting -> RitmRhythmColors(FastingAccent, FastingSoft)
-    RitmRhythm.Water -> RitmRhythmColors(WaterAccent, WaterSoft)
-    RitmRhythm.Steps -> RitmRhythmColors(StepsAccent, StepsSoft)
-    RitmRhythm.Habits -> RitmRhythmColors(HabitsAccent, HabitsSoft)
-}
+fun RitmRhythm.colors(): RitmRhythmColors =
+    when (this) {
+        RitmRhythm.Today -> RitmRhythmColors(Primary, PrimaryContainer)
+        RitmRhythm.Cycle -> RitmRhythmColors(CycleAccent, CycleSoft)
+        RitmRhythm.Fasting -> RitmRhythmColors(FastingAccent, FastingSoft)
+        RitmRhythm.Water -> RitmRhythmColors(WaterAccent, WaterSoft)
+        RitmRhythm.Steps -> RitmRhythmColors(StepsAccent, StepsSoft)
+        RitmRhythm.Habits -> RitmRhythmColors(HabitsAccent, HabitsSoft)
+    }
 
 @Composable
 @Suppress("LongParameterList")
@@ -84,10 +85,11 @@ fun ritmBanner(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
-                modifier = Modifier
-                    .size(12.dp)
-                    .clip(CircleShape)
-                    .background(colors.accent),
+                modifier =
+                    Modifier
+                        .size(12.dp)
+                        .clip(CircleShape)
+                        .background(colors.accent),
             )
             Column(
                 modifier = Modifier.weight(1f),

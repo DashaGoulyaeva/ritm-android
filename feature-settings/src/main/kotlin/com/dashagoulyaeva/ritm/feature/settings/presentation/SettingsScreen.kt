@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import com.dashagoulyaeva.ritm.core.ui.theme.spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
+@Suppress("LongMethod", "MaxLineLength")
 @Composable
 fun settingsScreen(
     onWaterSettingsClick: () -> Unit,
@@ -55,7 +56,11 @@ fun settingsScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(vertical = MaterialTheme.spacing.sm),
                 )
-                settingsItem(title = "Настройки голодания", subtitle = "Режим по умолчанию", onClick = onFastingSettingsClick)
+                settingsItem(
+                    title = "Настройки голодания",
+                    subtitle = "Режим по умолчанию",
+                    onClick = onFastingSettingsClick,
+                )
                 HorizontalDivider()
             }
             item {
@@ -92,15 +97,31 @@ fun settingsScreen(
 }
 
 @Composable
-private fun settingsItem(title: String, subtitle: String, onClick: () -> Unit) {
+private fun settingsItem(
+    title: String,
+    subtitle: String,
+    onClick: () -> Unit,
+) {
     Row(
-        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick).padding(vertical = MaterialTheme.spacing.md),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+                .padding(vertical = MaterialTheme.spacing.md),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(modifier = Modifier.weight(1f)) {
             Text(text = title, style = MaterialTheme.typography.bodyLarge)
-            Text(text = subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(
+                text = subtitle,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
-        Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
     }
 }

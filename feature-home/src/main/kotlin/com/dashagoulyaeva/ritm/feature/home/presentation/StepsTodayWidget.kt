@@ -59,13 +59,27 @@ fun stepsTodayWidget(
     }
 }
 
+@Suppress("MaxLineLength")
 @Composable
 private fun stepsFallbackBanner(fallback: StepsFallback) {
-    val (title, subtitle) = when (fallback) {
-        StepsFallback.PermissionDenied -> "Нет доступа" to "Разреши шагомер в настройках, и я снова начну считать."
-        StepsFallback.SensorUnavailable -> "Шагомер недоступен" to "На этом устройстве шаги могут не считаться автоматически."
-        StepsFallback.NoDataYet -> "Пока тихо" to "Данных за сегодня ещё нет. Если телефон был не с тобой — бывает."
-    }
+    val (title, subtitle) =
+        when (fallback) {
+            StepsFallback.PermissionDenied ->
+                Pair(
+                    "Нет доступа",
+                    "Разреши шагомер в настройках, и я снова начну считать.",
+                )
+            StepsFallback.SensorUnavailable ->
+                Pair(
+                    "Шагомер недоступен",
+                    "На этом устройстве шаги могут не считаться автоматически.",
+                )
+            StepsFallback.NoDataYet ->
+                Pair(
+                    "Пока тихо",
+                    "Данных за сегодня ещё нет. Если телефон был не с тобой — бывает.",
+                )
+        }
 
     ritmBanner(
         title = title,

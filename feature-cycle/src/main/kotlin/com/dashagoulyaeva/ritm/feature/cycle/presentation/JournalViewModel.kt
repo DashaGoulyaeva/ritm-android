@@ -16,48 +16,65 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class JournalViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
-    private val getCycleDayLog: GetCycleDayLog,
-    private val saveCycleDayLog: SaveCycleDayLog,
-) : ViewModel() {
+class JournalViewModel
+    @Inject
+    constructor(
+        savedStateHandle: SavedStateHandle,
+        private val getCycleDayLog: GetCycleDayLog,
+        private val saveCycleDayLog: SaveCycleDayLog,
+    ) : ViewModel() {
+        private val date: String = checkNotNull(savedStateHandle["date"])
+        private val _uiState = MutableStateFlow(JournalUiState(date = date))
+        val uiState: StateFlow<JournalUiState> = _uiState.asStateFlow()
 
-    private val date: String = checkNotNull(savedStateHandle["date"])
-    private val _uiState = MutableStateFlow(JournalUiState(date = date))
-    val uiState: StateFlow<JournalUiState> = _uiState.asStateFlow()
+        init {
+            viewModelScope.launch {
+                val existing = getCycleDayLog(date)
+                _uiState.value =
+                    if (existing != null) {
+                        _uiState.value.copy(
+                            flow = existing.flow,
+                            mood = existing.mood,
+                            symptoms = existing.symptoms.toSet(),
+                            note = existing.note,
+                            isLoading = false,
+                        )
+                    } else {
+                        _uiState.value.copy(isLoading = false)
+                    }
+            }
+        }
 
-    init {
-        viewModelScope.launch {
-            val existing = getCycleDayLog(date)
-            _uiState.value = if (existing != null) {
-                _uiState.value.copy(
-                    flow = existing.flow,
-                    mood = existing.mood,
-                    symptoms = existing.symptoms.toSet(),
-                    note = existing.note,
-                    isLoading = false,
+        fun setFlow(flow: FlowIntensity) {
+            _uiState.value = _uiState.value.copy(flow = flow)
+        }
+
+        fun setMood(mood: MoodLevel) {
+            _uiState.value = _uiState.value.copy(mood = mood)
+        }
+
+        fun toggleSymptom(key: String) {
+            val s = _uiState.value.symptoms.toMutableSet()
+            if (s.contains(key)) s.remove(key) else s.add(key)
+            _uiState.value = _uiState.value.copy(symptoms = s)
+        }
+
+        fun setNote(note: String) {
+            _uiState.value = _uiState.value.copy(note = note)
+        }
+
+        fun save() {
+            viewModelScope.launch {
+                saveCycleDayLog(
+                    CycleDayLog(
+                        date = date,
+                        flow = _uiState.value.flow,
+                        mood = _uiState.value.mood,
+                        symptoms = _uiState.value.symptoms.toList(),
+                        note = _uiState.value.note,
+                    ),
                 )
-            } else {
-                _uiState.value.copy(isLoading = false)
+                _uiState.value = _uiState.value.copy(isSaved = true)
             }
         }
     }
-
-    fun setFlow(flow: FlowIntensity) { _uiState.value = _uiState.value.copy(flow = flow) }
-    fun setMood(mood: MoodLevel) { _uiState.value = _uiState.value.copy(mood = mood) }
-    fun toggleSymptom(key: String) {
-        val s = _uiState.value.symptoms.toMutableSet()
-        if (s.contains(key)) s.remove(key) else s.add(key)
-        _uiState.value = _uiState.value.copy(symptoms = s)
-    }
-    fun setNote(note: String) { _uiState.value = _uiState.value.copy(note = note) }
-    fun save() {
-        viewModelScope.launch {
-            saveCycleDayLog(CycleDayLog(
-                date = date, flow = _uiState.value.flow, mood = _uiState.value.mood,
-                symptoms = _uiState.value.symptoms.toList(), note = _uiState.value.note,
-            ))
-            _uiState.value = _uiState.value.copy(isSaved = true)
-        }
-    }
-}

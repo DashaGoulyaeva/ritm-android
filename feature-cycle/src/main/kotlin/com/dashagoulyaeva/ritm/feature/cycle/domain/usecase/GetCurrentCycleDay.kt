@@ -9,28 +9,38 @@ import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 
-class GetCurrentCycleDay @Inject constructor(
-    private val repository: CycleRepository,
-) {
-    operator fun invoke(): Flow<CycleDayInfo> =
-        repository.getAllPeriods().map { periods ->
-            val lastPeriod = periods.maxByOrNull { it.startDate }
-                ?: return@map CycleDayInfo(0, CyclePhase.UNKNOWN, false)
+private const val MENSTRUAL_PHASE_LAST_DAY = 5
+private const val FOLLICULAR_PHASE_LAST_DAY = 13
+private const val OVULATION_PHASE_LAST_DAY = 16
+private const val LUTEAL_PHASE_LAST_DAY = 28
 
-            val today = LocalDate.now()
-            val start = LocalDate.parse(lastPeriod.startDate)
-            val dayOfCycle = (ChronoUnit.DAYS.between(start, today) + 1).toInt()
-            val isInPeriod = lastPeriod.endDate == null ||
-                today <= LocalDate.parse(lastPeriod.endDate!!)
+class GetCurrentCycleDay
+    @Inject
+    constructor(
+        private val repository: CycleRepository,
+    ) {
+        operator fun invoke(): Flow<CycleDayInfo> =
+            repository.getAllPeriods().map { periods ->
+                val lastPeriod =
+                    periods.maxByOrNull { it.startDate }
+                        ?: return@map CycleDayInfo(0, CyclePhase.UNKNOWN, false)
 
-            val phase = when {
-                dayOfCycle <= 5 -> CyclePhase.MENSTRUAL
-                dayOfCycle <= 13 -> CyclePhase.FOLLICULAR
-                dayOfCycle <= 16 -> CyclePhase.OVULATION
-                dayOfCycle <= 28 -> CyclePhase.LUTEAL
-                else -> CyclePhase.LUTEAL
+                val today = LocalDate.now()
+                val start = LocalDate.parse(lastPeriod.startDate)
+                val dayOfCycle = (ChronoUnit.DAYS.between(start, today) + 1).toInt()
+                val isInPeriod =
+                    lastPeriod.endDate == null ||
+                        today <= LocalDate.parse(lastPeriod.endDate!!)
+
+                val phase =
+                    when {
+                        dayOfCycle <= MENSTRUAL_PHASE_LAST_DAY -> CyclePhase.MENSTRUAL
+                        dayOfCycle <= FOLLICULAR_PHASE_LAST_DAY -> CyclePhase.FOLLICULAR
+                        dayOfCycle <= OVULATION_PHASE_LAST_DAY -> CyclePhase.OVULATION
+                        dayOfCycle <= LUTEAL_PHASE_LAST_DAY -> CyclePhase.LUTEAL
+                        else -> CyclePhase.LUTEAL
+                    }
+
+                CycleDayInfo(dayOfCycle, phase, isInPeriod)
             }
-
-            CycleDayInfo(dayOfCycle, phase, isInPeriod)
-        }
-}
+    }

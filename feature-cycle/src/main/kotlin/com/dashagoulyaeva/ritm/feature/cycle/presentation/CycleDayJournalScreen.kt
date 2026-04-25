@@ -33,34 +33,38 @@ import com.dashagoulyaeva.ritm.core.ui.theme.spacing
 import com.dashagoulyaeva.ritm.feature.cycle.domain.model.FlowIntensity
 import com.dashagoulyaeva.ritm.feature.cycle.domain.model.MoodLevel
 
-private fun flowIntensityLabel(flow: FlowIntensity): String = when (flow) {
-    FlowIntensity.NONE -> "Нет"
-    FlowIntensity.LIGHT -> "Лёгкие"
-    FlowIntensity.MEDIUM -> "Средние"
-    FlowIntensity.HEAVY -> "Обильные"
-}
+private fun flowIntensityLabel(flow: FlowIntensity): String =
+    when (flow) {
+        FlowIntensity.NONE -> "Нет"
+        FlowIntensity.LIGHT -> "Лёгкие"
+        FlowIntensity.MEDIUM -> "Средние"
+        FlowIntensity.HEAVY -> "Обильные"
+    }
 
-private fun moodLevelLabel(mood: MoodLevel): String = when (mood) {
-    MoodLevel.GREAT -> "Отлично"
-    MoodLevel.GOOD -> "Хорошо"
-    MoodLevel.NEUTRAL -> "Нейтрально"
-    MoodLevel.LOW -> "Плохо"
-    MoodLevel.AWFUL -> "Ужасно"
-    MoodLevel.UNKNOWN -> ""
-}
+private fun moodLevelLabel(mood: MoodLevel): String =
+    when (mood) {
+        MoodLevel.GREAT -> "Отлично"
+        MoodLevel.GOOD -> "Хорошо"
+        MoodLevel.NEUTRAL -> "Нейтрально"
+        MoodLevel.LOW -> "Плохо"
+        MoodLevel.AWFUL -> "Ужасно"
+        MoodLevel.UNKNOWN -> ""
+    }
 
-private val symptoms = listOf(
-    "Боль" to "боль",
-    "Усталость" to "усталость",
-    "Вздутие" to "вздутие",
-    "Головная боль" to "головная_боль",
-    "Тошнота" to "тошнота",
-    "Перепады настроения" to "перепады_настроения",
-    "Акне" to "акне",
-)
+private val symptoms =
+    listOf(
+        "Боль" to "боль",
+        "Усталость" to "усталость",
+        "Вздутие" to "вздутие",
+        "Головная боль" to "головная_боль",
+        "Тошнота" to "тошнота",
+        "Перепады настроения" to "перепады_настроения",
+        "Акне" to "акне",
+    )
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
+@Suppress("LongMethod")
 fun cycleDayJournalScreen(
     date: String,
     onBack: () -> Unit,
@@ -88,10 +92,11 @@ fun cycleDayJournalScreen(
         },
     ) { innerPadding ->
         Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .padding(horizontal = MaterialTheme.spacing.md)
-                .verticalScroll(rememberScrollState()),
+            modifier =
+                Modifier
+                    .padding(innerPadding)
+                    .padding(horizontal = MaterialTheme.spacing.md)
+                    .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm),
         ) {
             // Выделения
@@ -106,9 +111,10 @@ fun cycleDayJournalScreen(
                         selected = state.flow == flow,
                         onClick = { viewModel.setFlow(flow) },
                         label = { Text(flowIntensityLabel(flow)) },
-                        colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = CycleAccent.copy(alpha = 0.2f),
-                        ),
+                        colors =
+                            FilterChipDefaults.filterChipColors(
+                                selectedContainerColor = CycleAccent.copy(alpha = 0.2f),
+                            ),
                     )
                 }
             }
@@ -127,9 +133,10 @@ fun cycleDayJournalScreen(
                             selected = state.mood == mood,
                             onClick = { viewModel.setMood(mood) },
                             label = { Text(moodLevelLabel(mood)) },
-                            colors = FilterChipDefaults.filterChipColors(
-                                selectedContainerColor = CycleAccent.copy(alpha = 0.2f),
-                            ),
+                            colors =
+                                FilterChipDefaults.filterChipColors(
+                                    selectedContainerColor = CycleAccent.copy(alpha = 0.2f),
+                                ),
                         )
                     }
             }
@@ -146,9 +153,10 @@ fun cycleDayJournalScreen(
                         selected = state.symptoms.contains(key),
                         onClick = { viewModel.toggleSymptom(key) },
                         label = { Text(label) },
-                        colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = CycleAccent.copy(alpha = 0.2f),
-                        ),
+                        colors =
+                            FilterChipDefaults.filterChipColors(
+                                selectedContainerColor = CycleAccent.copy(alpha = 0.2f),
+                            ),
                     )
                 }
             }
@@ -170,9 +178,10 @@ fun cycleDayJournalScreen(
             ritmButton(
                 text = "Сохранить",
                 onClick = { viewModel.save() },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = MaterialTheme.spacing.md),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = MaterialTheme.spacing.md),
             )
         }
     }

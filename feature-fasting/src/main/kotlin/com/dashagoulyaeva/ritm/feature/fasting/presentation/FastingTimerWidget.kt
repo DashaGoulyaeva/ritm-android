@@ -21,7 +21,11 @@ import com.dashagoulyaeva.ritm.core.ui.components.ritmTonalButton
 import com.dashagoulyaeva.ritm.core.ui.theme.FastingAccent
 import com.dashagoulyaeva.ritm.core.ui.theme.spacing
 
+private const val HOUR_IN_MILLIS = 3_600_000L
+private const val MINUTE_IN_MILLIS = 60_000L
+
 @Composable
+@Suppress("LongMethod")
 fun fastingTimerWidget(
     onStartClick: () -> Unit,
     onHistoryClick: () -> Unit,
@@ -48,12 +52,16 @@ fun fastingTimerWidget(
 
             if (state.activeSession != null) {
                 val remaining = state.remainingMs ?: 0L
-                val hours = remaining / 3_600_000L
-                val minutes = (remaining % 3_600_000L) / 60_000L
+                val hours = remaining / HOUR_IN_MILLIS
+                val minutes = (remaining % HOUR_IN_MILLIS) / MINUTE_IN_MILLIS
 
                 Text(
-                    text = if (remaining > 0) "Осталось: %02d:%02d".format(hours, minutes)
-                    else "Время вышло!",
+                    text =
+                        if (remaining > 0) {
+                            "Осталось: %02d:%02d".format(hours, minutes)
+                        } else {
+                            "Время вышло!"
+                        },
                     style = MaterialTheme.typography.headlineSmall,
                     color = FastingAccent,
                 )

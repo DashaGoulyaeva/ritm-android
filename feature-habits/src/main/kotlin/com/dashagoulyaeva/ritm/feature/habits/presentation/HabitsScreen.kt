@@ -41,6 +41,7 @@ import com.dashagoulyaeva.ritm.feature.habits.domain.model.Habit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+@Suppress("LongMethod")
 fun habitsScreen(
     onHabitClick: (Long) -> Unit,
     viewModel: HabitsViewModel = hiltViewModel(),
@@ -63,9 +64,10 @@ fun habitsScreen(
     ) { padding ->
         if (state.habits.isEmpty() && !state.isLoading) {
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(padding),
                 contentAlignment = Alignment.Center,
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -85,9 +87,10 @@ fun habitsScreen(
             }
         } else {
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(padding),
                 contentPadding = PaddingValues(MaterialTheme.spacing.md),
                 verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm),
             ) {
@@ -123,14 +126,16 @@ private fun habitListItem(
     modifier: Modifier = Modifier,
 ) {
     ritmCard(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(MaterialTheme.spacing.md),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(MaterialTheme.spacing.md),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
@@ -155,9 +160,10 @@ private fun habitListItem(
             Checkbox(
                 checked = isChecked,
                 onCheckedChange = onCheckedChange,
-                colors = CheckboxDefaults.colors(
-                    checkedColor = HabitsAccent,
-                ),
+                colors =
+                    CheckboxDefaults.colors(
+                        checkedColor = HabitsAccent,
+                    ),
             )
         }
     }

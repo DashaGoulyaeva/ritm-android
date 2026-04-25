@@ -14,52 +14,58 @@ import org.junit.Assert.assertFalse
 import org.junit.Test
 
 class ObserveTodayStepsTest {
-
     private class FakeStepsRepository : StepsRepository {
         var stepsFlow: Flow<Int> = flowOf(0)
 
         override fun observeTodaySteps(): Flow<Int> = stepsFlow
+
         override suspend fun getStepsHistory(limit: Int): List<StepRecord> = emptyList()
-        override suspend fun saveTodaySteps(stepCount: Int) {}
+
+        override suspend fun saveTodaySteps(stepCount: Int) = Unit
     }
 
     @Test
-    fun `emits step count from repository`() = runTest {
-        val repo = FakeStepsRepository().apply { stepsFlow = flowOf(5000) }
-        val useCase = ObserveTodaySteps(repo)
+    fun `emits step count from repository`() =
+        runTest {
+            val repo = FakeStepsRepository().apply { stepsFlow = flowOf(5000) }
+            val useCase = ObserveTodaySteps(repo)
 
-        val result = useCase().first()
+            val result = useCase().first()
 
-        assertEquals(5000, result)
-    }
-
-    @Test
-    fun `emits zero when sensor unavailable (-1)`() = runTest {
-        val repo = FakeStepsRepository().apply { stepsFlow = flowOf(-1) }
-        val useCase = ObserveTodaySteps(repo)
-
-        val raw = useCase().first()
-
-        // The use-case itself forwards the raw value; the mapping to todaySteps=0
-        // and isAvailable=false lives in StepsViewModel. Here we assert the contract:
-        // the repository emits -1 and the use case passes it through unchanged.
-        assertEquals(-1, raw)
-        assertFalse("sensor unavailable when value is -1", raw >= 0)
-    }
-
-    @Test
-    fun `emits updated value on sensor change`() = runTest {
-        val repo = FakeStepsRepository().apply {
-            stepsFlow = flow {
-                emit(1000)
-                emit(2000)
-            }
+            assertEquals(5000, result)
         }
-        val useCase = ObserveTodaySteps(repo)
 
-        val results = useCase().take(2).toList()
+    @Test
+    fun `emits zero when sensor unavailable (-1)`() =
+        runTest {
+            val repo = FakeStepsRepository().apply { stepsFlow = flowOf(-1) }
+            val useCase = ObserveTodaySteps(repo)
 
-        assertEquals(2, results.size)
-        assertEquals(2000, results.last())
-    }
+            val raw = useCase().first()
+
+            // The use-case itself forwards the raw value; the mapping to todaySteps=0
+            // and isAvailable=false lives in StepsViewModel. Here we assert the contract:
+            // the repository emits -1 and the use case passes it through unchanged.
+            assertEquals(-1, raw)
+            assertFalse("sensor unavailable when value is -1", raw >= 0)
+        }
+
+    @Test
+    fun `emits updated value on sensor change`() =
+        runTest {
+            val repo =
+                FakeStepsRepository().apply {
+                    stepsFlow =
+                        flow {
+                            emit(1000)
+                            emit(2000)
+                        }
+                }
+            val useCase = ObserveTodaySteps(repo)
+
+            val results = useCase().take(2).toList()
+
+            assertEquals(2, results.size)
+            assertEquals(2000, results.last())
+        }
 }

@@ -27,7 +27,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,6 +42,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+@Suppress("LongMethod", "CyclomaticComplexMethod", "MagicNumber")
 fun cycleCalendarScreen(
     onDayClick: (String) -> Unit,
     cycleViewModel: CycleViewModel = hiltViewModel(),
@@ -57,19 +57,21 @@ fun cycleCalendarScreen(
         },
     ) { innerPadding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(MaterialTheme.spacing.md),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(MaterialTheme.spacing.md),
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.md),
         ) {
             // 1. Текст текущего дня
             val dayInfo = cycleState.currentDayInfo
-            val currentDayText = when {
-                dayInfo.dayOfCycle == 0 -> "Нет данных о цикле"
-                dayInfo.isInPeriod -> "День цикла ${dayInfo.dayOfCycle} · Менструация"
-                else -> "День цикла ${dayInfo.dayOfCycle} · ${dayInfo.phase.russianName()}"
-            }
+            val currentDayText =
+                when {
+                    dayInfo.dayOfCycle == 0 -> "Нет данных о цикле"
+                    dayInfo.isInPeriod -> "День цикла ${dayInfo.dayOfCycle} · Менструация"
+                    else -> "День цикла ${dayInfo.dayOfCycle} · ${dayInfo.phase.russianName()}"
+                }
             Text(
                 text = currentDayText,
                 color = CycleAccent,
@@ -104,8 +106,9 @@ fun cycleCalendarScreen(
             // 4. Заголовок месяца
             if (calState.year != 0 && calState.month != 0) {
                 val yearMonth = YearMonth.of(calState.year, calState.month)
-                val monthName = yearMonth.month.getDisplayName(TextStyle.FULL_STANDALONE, Locale("ru"))
-                    .replaceFirstChar { it.uppercase() }
+                val monthName =
+                    yearMonth.month.getDisplayName(TextStyle.FULL_STANDALONE, Locale("ru"))
+                        .replaceFirstChar { it.uppercase() }
                 Text(
                     text = "$monthName ${calState.year}",
                     style = MaterialTheme.typography.titleSmall,
@@ -149,12 +152,13 @@ fun cycleCalendarScreen(
                 // Набор дат с логами
                 val logDates = calState.logs.map { it.date }.toSet()
 
-                val gridItems = buildList {
-                    repeat(startOffset) { add(null) }
-                    for (day in 1..daysInMonth) {
-                        add(yearMonth.atDay(day))
+                val gridItems =
+                    buildList {
+                        repeat(startOffset) { add(null) }
+                        for (day in 1..daysInMonth) {
+                            add(yearMonth.atDay(day))
+                        }
                     }
-                }
 
                 LazyVerticalGrid(columns = GridCells.Fixed(7)) {
                     items(gridItems) { date ->
@@ -167,18 +171,25 @@ fun cycleCalendarScreen(
                             val hasLog = logDates.contains(dateString)
 
                             Box(
-                                modifier = Modifier
-                                    .aspectRatio(1f)
-                                    .clip(CircleShape)
-                                    .then(
-                                        if (isInPeriod) Modifier.background(CycleAccent.copy(alpha = 0.3f))
-                                        else Modifier
-                                    )
-                                    .then(
-                                        if (isToday) Modifier.border(2.dp, CycleAccent, CircleShape)
-                                        else Modifier
-                                    )
-                                    .clickable { onDayClick(dateString) },
+                                modifier =
+                                    Modifier
+                                        .aspectRatio(1f)
+                                        .clip(CircleShape)
+                                        .then(
+                                            if (isInPeriod) {
+                                                Modifier.background(CycleAccent.copy(alpha = 0.3f))
+                                            } else {
+                                                Modifier
+                                            },
+                                        )
+                                        .then(
+                                            if (isToday) {
+                                                Modifier.border(2.dp, CycleAccent, CircleShape)
+                                            } else {
+                                                Modifier
+                                            },
+                                        )
+                                        .clickable { onDayClick(dateString) },
                                 contentAlignment = Alignment.Center,
                             ) {
                                 Text(
@@ -187,10 +198,11 @@ fun cycleCalendarScreen(
                                 )
                                 if (hasLog) {
                                     Box(
-                                        modifier = Modifier
-                                            .size(4.dp)
-                                            .background(CycleAccent, CircleShape)
-                                            .align(Alignment.BottomCenter),
+                                        modifier =
+                                            Modifier
+                                                .size(4.dp)
+                                                .background(CycleAccent, CircleShape)
+                                                .align(Alignment.BottomCenter),
                                     )
                                 }
                             }
@@ -202,10 +214,11 @@ fun cycleCalendarScreen(
     }
 }
 
-private fun CyclePhase.russianName(): String = when (this) {
-    CyclePhase.MENSTRUAL -> "Менструальная"
-    CyclePhase.FOLLICULAR -> "Фолликулярная"
-    CyclePhase.OVULATION -> "Овуляция"
-    CyclePhase.LUTEAL -> "Лютеиновая"
-    CyclePhase.UNKNOWN -> "Неизвестно"
-}
+private fun CyclePhase.russianName(): String =
+    when (this) {
+        CyclePhase.MENSTRUAL -> "Менструальная"
+        CyclePhase.FOLLICULAR -> "Фолликулярная"
+        CyclePhase.OVULATION -> "Овуляция"
+        CyclePhase.LUTEAL -> "Лютеиновая"
+        CyclePhase.UNKNOWN -> "Неизвестно"
+    }

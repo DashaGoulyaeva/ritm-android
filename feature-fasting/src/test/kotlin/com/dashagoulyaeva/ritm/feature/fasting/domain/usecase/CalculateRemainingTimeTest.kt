@@ -8,18 +8,25 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class CalculateRemainingTimeTest {
+private const val HOUR_IN_MILLIS = 3_600_000L
+private const val SECOND_IN_MILLIS = 1000L
+private const val SIXTEEN_HOURS = 16
 
+class CalculateRemainingTimeTest {
     private val useCase = CalculateRemainingTime()
 
-    private fun session(startedAt: Long, plannedEndAt: Long) = FastingSession(
-        id = 1L,
-        plan = FastingPlan.PLAN_16_8,
-        targetHours = 16,
-        startedAt = startedAt,
-        plannedEndAt = plannedEndAt,
-        status = FastingStatus.ACTIVE,
-    )
+    private fun session(
+        startedAt: Long,
+        plannedEndAt: Long,
+    ): FastingSession =
+        FastingSession(
+            id = 1L,
+            plan = FastingPlan.PLAN_16_8,
+            targetHours = SIXTEEN_HOURS,
+            startedAt = startedAt,
+            plannedEndAt = plannedEndAt,
+            status = FastingStatus.ACTIVE,
+        )
 
     @Test
     fun `returns null when session is null`() {
@@ -29,27 +36,26 @@ class CalculateRemainingTimeTest {
     @Test
     fun `returns positive remaining when end is in the future`() {
         val now = System.currentTimeMillis()
-        val plannedEnd = now + 3_600_000L // 1 hour ahead
-        val result = useCase(session(now - 3_600_000L, plannedEnd))
+        val plannedEnd = now + HOUR_IN_MILLIS
+        val result = useCase(session(now - HOUR_IN_MILLIS, plannedEnd))
         assertTrue("remaining should be positive", result!! > 0)
-        assertTrue("remaining should be ~1 hour", result <= 3_600_000L)
+        assertTrue("remaining should be ~1 hour", result <= HOUR_IN_MILLIS)
     }
 
     @Test
     fun `returns zero when end is in the past`() {
         val now = System.currentTimeMillis()
-        val result = useCase(session(now - 3_600_000L, now - 1000L))
+        val result = useCase(session(now - HOUR_IN_MILLIS, now - SECOND_IN_MILLIS))
         assertEquals(0L, result)
     }
 
     @Test
     fun `full 16h session has correct planned duration`() {
         val startedAt = System.currentTimeMillis()
-        val hours = 16
-        val plannedEndAt = startedAt + hours * 3_600_000L
+        val hours = SIXTEEN_HOURS
+        val plannedEndAt = startedAt + hours * HOUR_IN_MILLIS
         val result = useCase(session(startedAt, plannedEndAt))
-        // Remaining should be approximately 16 hours (tiny delta from System.currentTimeMillis calls)
-        val expectedMs = hours * 3_600_000L
-        assertTrue(result!! in (expectedMs - 1000L)..expectedMs)
+        val expectedMs = hours * HOUR_IN_MILLIS
+        assertTrue(result!! in (expectedMs - SECOND_IN_MILLIS)..expectedMs)
     }
 }

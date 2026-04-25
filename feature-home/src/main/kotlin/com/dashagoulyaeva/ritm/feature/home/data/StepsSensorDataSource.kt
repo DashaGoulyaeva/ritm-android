@@ -16,52 +16,59 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class StepsSensorDataSource @Inject constructor(
-    @ApplicationContext private val context: Context
-) {
-    /** Returns true if ACTIVITY_RECOGNITION permission is granted. */
-    fun hasPermission(): Boolean =
-        ActivityCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ACTIVITY_RECOGNITION
-        ) == PERMISSION_GRANTED
+class StepsSensorDataSource
+    @Inject
+    constructor(
+        @ApplicationContext private val context: Context,
+    ) {
+        /** Returns true if ACTIVITY_RECOGNITION permission is granted. */
+        fun hasPermission(): Boolean =
+            ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACTIVITY_RECOGNITION,
+            ) == PERMISSION_GRANTED
 
-    /**
-     * Returns a [Flow] that emits the cumulative step count from [Sensor.TYPE_STEP_COUNTER].
-     * Emits -1 if the sensor is unavailable or the permission is not granted, then closes.
-     */
-    fun observeSteps(): Flow<Int> = callbackFlow {
-        if (!hasPermission()) {
-            trySend(-1)
-            close()
-            return@callbackFlow
-        }
+        /**
+         * Returns a [Flow] that emits the cumulative step count from [Sensor.TYPE_STEP_COUNTER].
+         * Emits -1 if the sensor is unavailable or the permission is not granted, then closes.
+         */
+        fun observeSteps(): Flow<Int> =
+            callbackFlow {
+                if (!hasPermission()) {
+                    trySend(-1)
+                    close()
+                    return@callbackFlow
+                }
 
-        val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        val stepCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
+                val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+                val stepCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
 
-        if (stepCounter == null) {
-            trySend(-1)
-            close()
-            return@callbackFlow
-        }
+                if (stepCounter == null) {
+                    trySend(-1)
+                    close()
+                    return@callbackFlow
+                }
 
-        val listener = object : SensorEventListener {
-            override fun onSensorChanged(event: SensorEvent) {
-                trySend(event.values[0].toInt())
+                val listener =
+                    object : SensorEventListener {
+                        override fun onSensorChanged(event: SensorEvent) {
+                            trySend(event.values[0].toInt())
+                        }
+
+                        override fun onAccuracyChanged(
+                            sensor: Sensor,
+                            accuracy: Int,
+                        ) = Unit
+                    }
+
+                sensorManager.registerListener(
+                    listener,
+                    stepCounter,
+                    SensorManager.SENSOR_DELAY_NORMAL,
+                )
+
+                awaitClose {
+                    sensorManager.unregisterListener(listener)
+                }
             }
-
-            override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) = Unit
-        }
-
-        sensorManager.registerListener(
-            listener,
-            stepCounter,
-            SensorManager.SENSOR_DELAY_NORMAL
-        )
-
-        awaitClose {
-            sensorManager.unregisterListener(listener)
-        }
     }
-}

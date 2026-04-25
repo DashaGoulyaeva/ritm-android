@@ -16,43 +16,44 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HabitDetailViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
-    private val habitRepository: HabitRepository,
-    private val getHabitHistory: GetHabitHistory,
-    private val getHabitStreak: GetHabitStreak,
-    private val archiveHabit: ArchiveHabit,
-) : ViewModel() {
+class HabitDetailViewModel
+    @Inject
+    constructor(
+        savedStateHandle: SavedStateHandle,
+        private val habitRepository: HabitRepository,
+        private val getHabitHistory: GetHabitHistory,
+        private val getHabitStreak: GetHabitStreak,
+        private val archiveHabit: ArchiveHabit,
+    ) : ViewModel() {
+        private val habitId: Long = checkNotNull(savedStateHandle["habitId"])
 
-    private val habitId: Long = checkNotNull(savedStateHandle["habitId"])
+        private val _uiState = MutableStateFlow(HabitDetailUiState())
+        val uiState: StateFlow<HabitDetailUiState> = _uiState.asStateFlow()
 
-    private val _uiState = MutableStateFlow(HabitDetailUiState())
-    val uiState: StateFlow<HabitDetailUiState> = _uiState.asStateFlow()
+        init {
+            observeHabitDetail()
+        }
 
-    init {
-        observeHabitDetail()
-    }
+        private fun observeHabitDetail() {
+            viewModelScope.launch {
+                combine(
+                    getHabitHistory(habitId),
+                    getHabitStreak(habitId),
+                ) { checks, streak ->
+                    val habit = habitRepository.getHabitById(habitId)
+                    HabitDetailUiState(
+                        habit = habit,
+                        checks = checks.sortedByDescending { it.date },
+                        currentStreak = streak,
+                        isLoading = false,
+                    )
+                }.collect { _uiState.value = it }
+            }
+        }
 
-    private fun observeHabitDetail() {
-        viewModelScope.launch {
-            combine(
-                getHabitHistory(habitId),
-                getHabitStreak(habitId),
-            ) { checks, streak ->
-                val habit = habitRepository.getHabitById(habitId)
-                HabitDetailUiState(
-                    habit = habit,
-                    checks = checks.sortedByDescending { it.date },
-                    currentStreak = streak,
-                    isLoading = false,
-                )
-            }.collect { _uiState.value = it }
+        fun archive() {
+            viewModelScope.launch {
+                archiveHabit(habitId)
+            }
         }
     }
-
-    fun archive() {
-        viewModelScope.launch {
-            archiveHabit(habitId)
-        }
-    }
-}

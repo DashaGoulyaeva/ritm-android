@@ -1,7 +1,7 @@
 package com.dashagoulyaeva.ritm.feature.cycle.domain.model
 
 data class CycleDayInfo(
-    val dayOfCycle: Int, // 1-based, 0 if unknown
+    val dayOfCycle: Int,
     val phase: CyclePhase,
     val isInPeriod: Boolean,
 )

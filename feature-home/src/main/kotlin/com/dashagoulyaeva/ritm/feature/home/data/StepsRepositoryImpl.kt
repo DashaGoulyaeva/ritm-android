@@ -7,35 +7,36 @@ import com.dashagoulyaeva.ritm.feature.home.domain.repository.StepsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onEach
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class StepsRepositoryImpl @Inject constructor(
-    private val sensor: StepsSensorDataSource,
-    private val stepsDao: StepsDao,
-) : StepsRepository {
+class StepsRepositoryImpl
+    @Inject
+    constructor(
+        private val sensor: StepsSensorDataSource,
+        private val stepsDao: StepsDao,
+    ) : StepsRepository {
+        override fun observeTodaySteps(): Flow<Int> =
+            sensor.observeSteps()
+                .onEach { count -> if (count > 0) saveTodaySteps(count) }
+                .flowOn(Dispatchers.IO)
 
-    override fun observeTodaySteps(): Flow<Int> =
-        sensor.observeSteps()
-            .onEach { count -> if (count > 0) saveTodaySteps(count) }
-            .flowOn(Dispatchers.IO)
-
-    override suspend fun saveTodaySteps(stepCount: Int) {
-        stepsDao.upsertSteps(
-            StepDailyEntity(
-                date = LocalDate.now().toString(),
-                stepCount = stepCount,
-                lastUpdatedAt = System.currentTimeMillis(),
+        override suspend fun saveTodaySteps(stepCount: Int) {
+            stepsDao.upsertSteps(
+                StepDailyEntity(
+                    date = LocalDate.now().toString(),
+                    stepCount = stepCount,
+                    lastUpdatedAt = System.currentTimeMillis(),
+                ),
             )
-        )
-    }
+        }
 
-    override suspend fun getStepsHistory(limit: Int): List<StepRecord> =
-        stepsDao.getRecentSteps(limit)
-            .first()
-            .map { entity -> StepRecord(date = entity.date, stepCount = entity.stepCount) }
-}
+        override suspend fun getStepsHistory(limit: Int): List<StepRecord> =
+            stepsDao.getRecentSteps(limit)
+                .first()
+                .map { entity -> StepRecord(date = entity.date, stepCount = entity.stepCount) }
+    }

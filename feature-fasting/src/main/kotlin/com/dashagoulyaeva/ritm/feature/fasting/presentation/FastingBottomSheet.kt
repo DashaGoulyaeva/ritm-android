@@ -27,25 +27,27 @@ import com.dashagoulyaeva.ritm.feature.fasting.domain.model.FastingPlan
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+@Suppress("LongMethod")
 fun fastingBottomSheet(
     onDismiss: () -> Unit,
-    viewModel: FastingViewModel = hiltViewModel()
+    viewModel: FastingViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsState()
     val sheetState = rememberModalBottomSheetState()
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
-        sheetState = sheetState
+        sheetState = sheetState,
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(MaterialTheme.spacing.md)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(MaterialTheme.spacing.md),
         ) {
             Text(
                 text = "Начать голодание",
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleLarge,
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -53,14 +55,14 @@ fun fastingBottomSheet(
             Text(
                 text = "Выберите режим",
                 style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.md))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 FastingPlan.entries
                     .filter { it != FastingPlan.CUSTOM }
@@ -69,10 +71,11 @@ fun fastingBottomSheet(
                             selected = state.selectedPlan == plan,
                             onClick = { viewModel.selectPlan(plan) },
                             label = { Text(text = plan.displayName) },
-                            colors = FilterChipDefaults.filterChipColors(
-                                selectedContainerColor = FastingAccent.copy(alpha = 0.2f),
-                                selectedLabelColor = FastingAccent
-                            )
+                            colors =
+                                FilterChipDefaults.filterChipColors(
+                                    selectedContainerColor = FastingAccent.copy(alpha = 0.2f),
+                                    selectedLabelColor = FastingAccent,
+                                ),
                         )
                     }
             }
@@ -83,7 +86,7 @@ fun fastingBottomSheet(
                 Text(
                     text = "Голодание ${plan.displayName}: ${plan.hours} часов",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
 
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.md))
@@ -95,7 +98,7 @@ fun fastingBottomSheet(
                     viewModel.startFasting()
                     onDismiss()
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
 
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.md))

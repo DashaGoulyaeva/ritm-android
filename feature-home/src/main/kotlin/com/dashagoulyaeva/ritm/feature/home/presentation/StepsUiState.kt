@@ -11,13 +11,14 @@ data class StepsUiState(
         get() = if (dailyGoal > 0) (todaySteps.toFloat() / dailyGoal).coerceIn(0f, 1f) else 0f
 
     val fallback: StepsFallback?
-        get() = when {
-            isLoading -> null
-            error?.contains("permission", ignoreCase = true) == true -> StepsFallback.PermissionDenied
-            !isAvailable -> StepsFallback.SensorUnavailable
-            todaySteps == 0 -> StepsFallback.NoDataYet
-            else -> null
-        }
+        get() =
+            when {
+                isLoading -> null
+                error?.contains("permission", ignoreCase = true) == true -> StepsFallback.PermissionDenied
+                !isAvailable -> StepsFallback.SensorUnavailable
+                todaySteps == 0 -> StepsFallback.NoDataYet
+                else -> null
+            }
 }
 
 enum class StepsFallback {

@@ -43,10 +43,11 @@ fun reminderSettingsScreen(onBack: () -> Unit) {
         },
     ) { padding ->
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(horizontal = MaterialTheme.spacing.md),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .padding(horizontal = MaterialTheme.spacing.md),
         ) {
             item {
                 reminderInfoItem(
@@ -75,11 +76,15 @@ fun reminderSettingsScreen(onBack: () -> Unit) {
 }
 
 @Composable
-private fun reminderInfoItem(title: String, subtitle: String) {
+private fun reminderInfoItem(
+    title: String,
+    subtitle: String,
+) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = MaterialTheme.spacing.md),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = MaterialTheme.spacing.md),
     ) {
         Text(text = title, style = MaterialTheme.typography.bodyLarge)
         Text(
@@ -97,9 +102,10 @@ private fun reminderSwitchItem(
     onCheckedChange: (Boolean) -> Unit,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = MaterialTheme.spacing.sm),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = MaterialTheme.spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(

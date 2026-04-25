@@ -5,9 +5,10 @@ import com.dashagoulyaeva.ritm.feature.habits.domain.repository.HabitRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetChecksForDate @Inject constructor(
-    private val repository: HabitRepository,
-) {
-    operator fun invoke(date: String): Flow<List<HabitCheck>> =
-        repository.getChecksForDate(date)
-}
+class GetChecksForDate
+    @Inject
+    constructor(
+        private val repository: HabitRepository,
+    ) {
+        operator fun invoke(date: String): Flow<List<HabitCheck>> = repository.getChecksForDate(date)
+    }

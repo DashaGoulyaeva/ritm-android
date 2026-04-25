@@ -16,70 +16,75 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val TIMER_TICK_INTERVAL_MS = 60_000L
+
 @HiltViewModel
-class FastingViewModel @Inject constructor(
-    private val getActiveSession: GetActiveSession,
-    private val startFasting: StartFasting,
-    private val stopFasting: StopFasting,
-    private val calculateRemainingTime: CalculateRemainingTime,
-) : ViewModel() {
+class FastingViewModel
+    @Inject
+    constructor(
+        private val getActiveSession: GetActiveSession,
+        private val startFasting: StartFasting,
+        private val stopFasting: StopFasting,
+        private val calculateRemainingTime: CalculateRemainingTime,
+    ) : ViewModel() {
+        private val _uiState = MutableStateFlow(FastingUiState())
+        val uiState: StateFlow<FastingUiState> = _uiState.asStateFlow()
 
-    private val _uiState = MutableStateFlow(FastingUiState())
-    val uiState: StateFlow<FastingUiState> = _uiState.asStateFlow()
+        init {
+            observeSession()
+            startTimerTick()
+        }
 
-    init {
-        observeSession()
-        startTimerTick()
-    }
+        private fun observeSession() {
+            viewModelScope.launch {
+                getActiveSession().collect { session ->
+                    updateStateWithSession(session)
+                }
+            }
+        }
 
-    private fun observeSession() {
-        viewModelScope.launch {
-            getActiveSession().collect { session ->
-                updateStateWithSession(session)
+        private fun startTimerTick() {
+            viewModelScope.launch {
+                while (true) {
+                    delay(TIMER_TICK_INTERVAL_MS)
+                    updateStateWithSession(_uiState.value.activeSession)
+                }
+            }
+        }
+
+        private fun updateStateWithSession(session: FastingSession?) {
+            val remaining = calculateRemainingTime(session)
+            val progress =
+                if (session != null && remaining != null) {
+                    val total = session.plannedEndAt - session.startedAt
+                    if (total > 0) (1f - remaining.toFloat() / total).coerceIn(0f, 1f) else 0f
+                } else {
+                    0f
+                }
+            _uiState.value =
+                _uiState.value.copy(
+                    activeSession = session,
+                    remainingMs = remaining,
+                    progressFraction = progress,
+                    isLoading = false,
+                )
+        }
+
+        fun selectPlan(plan: FastingPlan) {
+            _uiState.value = _uiState.value.copy(selectedPlan = plan)
+        }
+
+        fun startFasting() {
+            viewModelScope.launch {
+                startFasting(_uiState.value.selectedPlan)
+            }
+        }
+
+        fun stopFasting(cancelled: Boolean = false) {
+            viewModelScope.launch {
+                _uiState.value.activeSession?.let { session ->
+                    stopFasting(session.id, cancelled)
+                }
             }
         }
     }
-
-    private fun startTimerTick() {
-        viewModelScope.launch {
-            while (true) {
-                delay(60_000L)
-                updateStateWithSession(_uiState.value.activeSession)
-            }
-        }
-    }
-
-    private fun updateStateWithSession(session: FastingSession?) {
-        val remaining = calculateRemainingTime(session)
-        val progress = if (session != null && remaining != null) {
-            val total = session.plannedEndAt - session.startedAt
-            if (total > 0) (1f - remaining.toFloat() / total).coerceIn(0f, 1f) else 0f
-        } else {
-            0f
-        }
-        _uiState.value = _uiState.value.copy(
-            activeSession = session,
-            remainingMs = remaining,
-            progressFraction = progress,
-            isLoading = false,
-        )
-    }
-
-    fun selectPlan(plan: FastingPlan) {
-        _uiState.value = _uiState.value.copy(selectedPlan = plan)
-    }
-
-    fun startFasting() {
-        viewModelScope.launch {
-            startFasting(_uiState.value.selectedPlan)
-        }
-    }
-
-    fun stopFasting(cancelled: Boolean = false) {
-        viewModelScope.launch {
-            _uiState.value.activeSession?.let { session ->
-                stopFasting(session.id, cancelled)
-            }
-        }
-    }
-}

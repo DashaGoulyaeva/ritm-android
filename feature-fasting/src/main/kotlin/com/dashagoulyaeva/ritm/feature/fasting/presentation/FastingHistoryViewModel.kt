@@ -11,18 +11,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FastingHistoryViewModel @Inject constructor(
-    private val getFastingHistory: GetFastingHistory,
-) : ViewModel() {
+class FastingHistoryViewModel
+    @Inject
+    constructor(
+        private val getFastingHistory: GetFastingHistory,
+    ) : ViewModel() {
+        private val _uiState = MutableStateFlow(FastingHistoryUiState())
+        val uiState: StateFlow<FastingHistoryUiState> = _uiState.asStateFlow()
 
-    private val _uiState = MutableStateFlow(FastingHistoryUiState())
-    val uiState: StateFlow<FastingHistoryUiState> = _uiState.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            getFastingHistory().collect { sessions ->
-                _uiState.value = FastingHistoryUiState(sessions = sessions, isLoading = false)
+        init {
+            viewModelScope.launch {
+                getFastingHistory().collect { sessions ->
+                    _uiState.value = FastingHistoryUiState(sessions = sessions, isLoading = false)
+                }
             }
         }
     }
-}

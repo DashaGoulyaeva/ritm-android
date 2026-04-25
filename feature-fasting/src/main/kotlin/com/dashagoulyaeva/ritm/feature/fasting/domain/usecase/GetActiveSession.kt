@@ -5,8 +5,10 @@ import com.dashagoulyaeva.ritm.feature.fasting.domain.repository.FastingReposito
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetActiveSession @Inject constructor(
-    private val repository: FastingRepository,
-) {
-    operator fun invoke(): Flow<FastingSession?> = repository.getActiveSession()
-}
+class GetActiveSession
+    @Inject
+    constructor(
+        private val repository: FastingRepository,
+    ) {
+        operator fun invoke(): Flow<FastingSession?> = repository.getActiveSession()
+    }

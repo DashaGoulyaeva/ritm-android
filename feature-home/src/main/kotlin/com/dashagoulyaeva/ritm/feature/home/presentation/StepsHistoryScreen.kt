@@ -18,9 +18,7 @@ import androidx.compose.ui.Modifier
 // TODO ST-07: implement with GetStepsHistory use case
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun stepsHistoryScreen(
-    onBack: () -> Unit,
-) {
+fun stepsHistoryScreen(onBack: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -37,9 +35,10 @@ fun stepsHistoryScreen(
         },
     ) { innerPadding ->
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
             contentAlignment = Alignment.Center,
         ) {
             Text("История шагов — скоро")
