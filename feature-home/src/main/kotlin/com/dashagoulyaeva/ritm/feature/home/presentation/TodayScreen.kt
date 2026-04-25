@@ -320,7 +320,7 @@ private fun fastingWidget(
     ritmSectionCard(modifier = modifier.fillMaxWidth()) {
         Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm)) {
             Text(
-                text = "?????????",
+                text = "Голодание",
                 style = MaterialTheme.typography.titleMedium,
             )
             if (isActive && remainingMs != null) {
@@ -328,26 +328,26 @@ private fun fastingWidget(
                 val minutes = TimeUnit.MILLISECONDS.toMinutes(remainingMs) % 60
                 val seconds = TimeUnit.MILLISECONDS.toSeconds(remainingMs) % 60
                 Text(
-                    text = "????????: %02d:%02d:%02d".format(hours, minutes, seconds),
+                    text = "Осталось: %02d:%02d:%02d".format(hours, minutes, seconds),
                     style = MaterialTheme.typography.bodyLarge,
                     color = FastingAccent,
                 )
                 ritmButton(
-                    text = "??????? ????",
+                    text = "Сменить окно",
                     onClick = onStartClick,
                 )
             } else if (isActive) {
                 Text(
-                    text = "?????? ???????",
+                    text = "Сессия активна",
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 ritmButton(
-                    text = "??????? ????",
+                    text = "Сменить окно",
                     onClick = onStartClick,
                 )
             } else {
                 ritmButton(
-                    text = "?????? ?????????",
+                    text = "Начать голодание",
                     onClick = onStartClick,
                 )
             }

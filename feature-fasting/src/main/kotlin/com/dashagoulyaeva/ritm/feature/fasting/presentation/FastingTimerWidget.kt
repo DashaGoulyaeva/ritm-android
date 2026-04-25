@@ -69,7 +69,7 @@ fun fastingTimerWidget(
                 Spacer(Modifier.height(MaterialTheme.spacing.sm))
 
                 ritmTonalButton(
-                    text = "??????? ????",
+                    text = "Сменить окно",
                     onClick = onStartClick,
                     modifier = Modifier.fillMaxWidth(),
                 )
