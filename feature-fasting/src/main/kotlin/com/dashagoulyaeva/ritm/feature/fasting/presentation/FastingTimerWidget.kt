@@ -68,6 +68,14 @@ fun fastingTimerWidget(
 
                 Spacer(Modifier.height(MaterialTheme.spacing.sm))
 
+                ritmTonalButton(
+                    text = "??????? ????",
+                    onClick = onStartClick,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+
+                Spacer(Modifier.height(MaterialTheme.spacing.sm))
+
                 Row {
                     ritmOutlinedButton(
                         text = "Завершить",

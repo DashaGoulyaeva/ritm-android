@@ -10,9 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -20,7 +18,6 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -29,10 +26,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.dashagoulyaeva.ritm.feature.home.presentation.StepsUiState
-import com.dashagoulyaeva.ritm.feature.home.presentation.StepsViewModel
+import com.dashagoulyaeva.ritm.core.ui.components.RitmRhythm
+import com.dashagoulyaeva.ritm.core.ui.components.rhythmOrb
+import com.dashagoulyaeva.ritm.core.ui.components.ritmBanner
 import com.dashagoulyaeva.ritm.core.ui.components.ritmButton
 import com.dashagoulyaeva.ritm.core.ui.components.ritmSectionCard
+import com.dashagoulyaeva.ritm.core.ui.theme.FastingAccent
+import com.dashagoulyaeva.ritm.core.ui.theme.WaterAccent
 import com.dashagoulyaeva.ritm.core.ui.theme.spacing
 import com.dashagoulyaeva.ritm.feature.cycle.domain.model.CycleDayInfo
 import com.dashagoulyaeva.ritm.feature.cycle.domain.model.CyclePhase
@@ -76,6 +76,18 @@ fun todayScreen(
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
+            item {
+                todayHero(
+                    waterCount = waterState.todayCount,
+                    waterGoal = waterState.dailyGoal,
+                    stepsState = stepsState,
+                    isFastingActive = today.activeFastingSession != null,
+                    habitsDone = today.habitCheckedIds.size,
+                    habitsTotal = today.habits.size,
+                    cycleDayInfo = today.cycleDayInfo,
+                )
+            }
+
             // T-05: WaterWidget
             item {
                 waterWidget(
@@ -114,7 +126,7 @@ fun todayScreen(
 
             // T-08: StepsWidget
             item {
-                stepsWidget(
+                stepsTodayWidget(
                     state = stepsState,
                     onHistoryClick = onStepsHistoryClick,
                 )
@@ -136,6 +148,69 @@ fun todayScreen(
             fastingBottomSheet(
                 onDismiss = { viewModel.hideFastingSheet() },
             )
+        }
+    }
+}
+
+@Composable
+private fun todayHero(
+    waterCount: Int,
+    waterGoal: Int,
+    stepsState: StepsUiState,
+    isFastingActive: Boolean,
+    habitsDone: Int,
+    habitsTotal: Int,
+    cycleDayInfo: CycleDayInfo?,
+    modifier: Modifier = Modifier,
+) {
+    ritmSectionCard(modifier = modifier.fillMaxWidth()) {
+        Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.md)) {
+            ritmBanner(
+                title = "Сегодня",
+                subtitle = "Пять ритмов в одном дне: вода, шаги, привычки, цикл и голодание.",
+                rhythm = RitmRhythm.Today,
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm),
+            ) {
+                rhythmOrb(
+                    label = "вода",
+                    value = if (waterGoal > 0) "$waterCount/$waterGoal" else "$waterCount",
+                    rhythm = RitmRhythm.Water,
+                    modifier = Modifier.weight(1f),
+                )
+                rhythmOrb(
+                    label = "шаги",
+                    value = if (stepsState.fallback == null) "${stepsState.todaySteps}" else "—",
+                    rhythm = RitmRhythm.Steps,
+                    modifier = Modifier.weight(1f),
+                )
+                rhythmOrb(
+                    label = "голод",
+                    value = if (isFastingActive) "идёт" else "нет",
+                    rhythm = RitmRhythm.Fasting,
+                    modifier = Modifier.weight(1f),
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm),
+            ) {
+                rhythmOrb(
+                    label = "привычки",
+                    value = "$habitsDone/$habitsTotal",
+                    rhythm = RitmRhythm.Habits,
+                    modifier = Modifier.weight(1f),
+                )
+                rhythmOrb(
+                    label = "цикл",
+                    value = cycleDayInfo?.dayOfCycle?.takeIf { it > 0 }?.toString() ?: "—",
+                    rhythm = RitmRhythm.Cycle,
+                    modifier = Modifier.weight(1f),
+                )
+                Column(modifier = Modifier.weight(1f)) {}
+            }
         }
     }
 }
@@ -171,6 +246,7 @@ private fun waterWidget(
                 LinearProgressIndicator(
                     progress = { progress.coerceIn(0f, 1f) },
                     modifier = Modifier.fillMaxWidth(),
+                    color = WaterAccent,
                 )
             }
             Row(
@@ -244,7 +320,7 @@ private fun fastingWidget(
     ritmSectionCard(modifier = modifier.fillMaxWidth()) {
         Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm)) {
             Text(
-                text = "Голодание",
+                text = "?????????",
                 style = MaterialTheme.typography.titleMedium,
             )
             if (isActive && remainingMs != null) {
@@ -252,25 +328,32 @@ private fun fastingWidget(
                 val minutes = TimeUnit.MILLISECONDS.toMinutes(remainingMs) % 60
                 val seconds = TimeUnit.MILLISECONDS.toSeconds(remainingMs) % 60
                 Text(
-                    text = "Осталось: %02d:%02d:%02d".format(hours, minutes, seconds),
+                    text = "????????: %02d:%02d:%02d".format(hours, minutes, seconds),
                     style = MaterialTheme.typography.bodyLarge,
+                    color = FastingAccent,
+                )
+                ritmButton(
+                    text = "??????? ????",
+                    onClick = onStartClick,
                 )
             } else if (isActive) {
                 Text(
-                    text = "Сессия активна",
+                    text = "?????? ???????",
                     style = MaterialTheme.typography.bodyMedium,
+                )
+                ritmButton(
+                    text = "??????? ????",
+                    onClick = onStartClick,
                 )
             } else {
                 ritmButton(
-                    text = "Начать голодание",
+                    text = "?????? ?????????",
                     onClick = onStartClick,
                 )
             }
         }
     }
 }
-
-// ── T-04: Cycle ───────────────────────────────────────────────────────────────
 
 @Composable
 private fun cycleWidget(
@@ -312,52 +395,3 @@ private fun CyclePhase.displayName(): String = when (this) {
 }
 
 // ── T-08: Steps ───────────────────────────────────────────────────────────────
-
-@Composable
-private fun stepsWidget(
-    state: StepsUiState,
-    onHistoryClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Card(modifier = modifier.fillMaxWidth()) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm),
-        ) {
-            Text(
-                text = "Шаги",
-                style = MaterialTheme.typography.titleMedium,
-            )
-            when {
-                !state.isAvailable -> {
-                    Text(
-                        text = "Шагомер недоступен на этом устройстве",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-                state.isLoading -> {
-                    CircularProgressIndicator()
-                }
-                else -> {
-                    Text(
-                        text = "${state.todaySteps} / ${state.dailyGoal}",
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                    val progress = if (state.dailyGoal > 0) {
-                        state.todaySteps.toFloat() / state.dailyGoal
-                    } else {
-                        0f
-                    }
-                    LinearProgressIndicator(
-                        progress = { progress.coerceIn(0f, 1f) },
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                    TextButton(onClick = onHistoryClick) {
-                        Text("История")
-                    }
-                }
-            }
-        }
-    }
-}
