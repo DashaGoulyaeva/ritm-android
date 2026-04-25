@@ -6,7 +6,7 @@
 
 ## 2026-04-25
 
-- Закрыт полный quality gate после применения дизайна v4: `qualityCheck` и `:app:assembleDebug` проходят успешно; APK собирается в `app/build/outputs/apk/debug/app-debug.apk`.
+- Закрыт полный quality gate после применения дизайна v4: `qualityCheck` и `:app:assembleDebug` проходят успешно; APK собирается в `C:\Users\1\AppData\Local\ritm-android-build\app\outputs\apk\debug\app-debug.apk`.
 - Зафиксирован дизайн-аудит v4 и технический план v4/v4.1 для Compose.
 - Добавлены rhythm-токены и базовые UI primitives для пяти ритмов: мягкие баннеры и круговые индикаторы.
 - Today получил общий статус дня по пяти ритмам; Steps получил отдельные fallback-состояния; Fasting получил действие «Сменить окно» без удаления истории.
