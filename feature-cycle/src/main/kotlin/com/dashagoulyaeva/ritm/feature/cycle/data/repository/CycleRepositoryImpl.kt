@@ -16,7 +16,6 @@ import com.dashagoulyaeva.ritm.core.database.entity.FlowIntensity as EntityFlowI
 import com.dashagoulyaeva.ritm.core.database.entity.MoodLevel as EntityMoodLevel
 
 @Singleton
-@Suppress("TooManyFunctions")
 class CycleRepositoryImpl
     @Inject
     constructor(
@@ -49,31 +48,31 @@ class CycleRepositoryImpl
             cycleDao.getLogsSince(fromDate).map { list -> list.map { it.toDomain() } }
 
         override suspend fun saveLog(log: CycleDayLog) = cycleDao.upsertLog(log.toEntity())
-
-        private fun CyclePeriodEntity.toDomain() =
-            CyclePeriod(
-                id = id,
-                startDate = startDate,
-                endDate = endDate,
-            )
-
-        private fun CycleDayLogEntity.toDomain() =
-            CycleDayLog(
-                id = id,
-                date = date,
-                flow = FlowIntensity.valueOf(flow.name),
-                mood = MoodLevel.valueOf(mood.name),
-                symptoms = if (symptoms.isBlank()) emptyList() else symptoms.split(","),
-                note = note,
-            )
-
-        private fun CycleDayLog.toEntity() =
-            CycleDayLogEntity(
-                id = id,
-                date = date,
-                flow = EntityFlowIntensity.valueOf(flow.name),
-                mood = EntityMoodLevel.valueOf(mood.name),
-                symptoms = symptoms.joinToString(","),
-                note = note,
-            )
     }
+
+private fun CyclePeriodEntity.toDomain() =
+    CyclePeriod(
+        id = id,
+        startDate = startDate,
+        endDate = endDate,
+    )
+
+private fun CycleDayLogEntity.toDomain() =
+    CycleDayLog(
+        id = id,
+        date = date,
+        flow = FlowIntensity.valueOf(flow.name),
+        mood = MoodLevel.valueOf(mood.name),
+        symptoms = if (symptoms.isBlank()) emptyList() else symptoms.split(","),
+        note = note,
+    )
+
+private fun CycleDayLog.toEntity() =
+    CycleDayLogEntity(
+        id = id,
+        date = date,
+        flow = EntityFlowIntensity.valueOf(flow.name),
+        mood = EntityMoodLevel.valueOf(mood.name),
+        symptoms = symptoms.joinToString(","),
+        note = note,
+    )

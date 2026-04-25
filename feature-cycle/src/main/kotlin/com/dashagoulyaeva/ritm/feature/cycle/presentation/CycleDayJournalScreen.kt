@@ -51,6 +51,9 @@ private fun moodLevelLabel(mood: MoodLevel): String =
         MoodLevel.UNKNOWN -> ""
     }
 
+private const val CHIP_ALPHA = 0.2f
+private const val NOTE_MIN_LINES = 3
+
 private val symptoms =
     listOf(
         "Боль" to "боль",
@@ -62,9 +65,8 @@ private val symptoms =
         "Акне" to "акне",
     )
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-@Suppress("LongMethod")
 fun cycleDayJournalScreen(
     date: String,
     onBack: () -> Unit,
@@ -99,90 +101,116 @@ fun cycleDayJournalScreen(
                     .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm),
         ) {
-            // Выделения
-            Text(
-                text = "Выделения",
-                style = MaterialTheme.typography.titleSmall,
-                modifier = Modifier.padding(top = MaterialTheme.spacing.md),
-            )
-            Row(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm)) {
-                FlowIntensity.entries.forEach { flow ->
-                    FilterChip(
-                        selected = state.flow == flow,
-                        onClick = { viewModel.setFlow(flow) },
-                        label = { Text(flowIntensityLabel(flow)) },
-                        colors =
-                            FilterChipDefaults.filterChipColors(
-                                selectedContainerColor = CycleAccent.copy(alpha = 0.2f),
-                            ),
-                    )
-                }
-            }
+            journalFlowSection(state, viewModel)
+            journalMoodSection(state, viewModel)
+            journalSymptomsSection(state, viewModel)
+            journalNoteSection(state, viewModel)
+        }
+    }
+}
 
-            // Настроение
-            Text(
-                text = "Настроение",
-                style = MaterialTheme.typography.titleSmall,
-                modifier = Modifier.padding(top = MaterialTheme.spacing.sm),
-            )
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm)) {
-                MoodLevel.entries
-                    .filter { it != MoodLevel.UNKNOWN }
-                    .forEach { mood ->
-                        FilterChip(
-                            selected = state.mood == mood,
-                            onClick = { viewModel.setMood(mood) },
-                            label = { Text(moodLevelLabel(mood)) },
-                            colors =
-                                FilterChipDefaults.filterChipColors(
-                                    selectedContainerColor = CycleAccent.copy(alpha = 0.2f),
-                                ),
-                        )
-                    }
-            }
-
-            // Симптомы
-            Text(
-                text = "Симптомы",
-                style = MaterialTheme.typography.titleSmall,
-                modifier = Modifier.padding(top = MaterialTheme.spacing.sm),
-            )
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm)) {
-                symptoms.forEach { (label, key) ->
-                    FilterChip(
-                        selected = state.symptoms.contains(key),
-                        onClick = { viewModel.toggleSymptom(key) },
-                        label = { Text(label) },
-                        colors =
-                            FilterChipDefaults.filterChipColors(
-                                selectedContainerColor = CycleAccent.copy(alpha = 0.2f),
-                            ),
-                    )
-                }
-            }
-
-            // Заметка
-            Text(
-                text = "Заметка",
-                style = MaterialTheme.typography.titleSmall,
-                modifier = Modifier.padding(top = MaterialTheme.spacing.sm),
-            )
-            OutlinedTextField(
-                value = state.note,
-                onValueChange = { viewModel.setNote(it) },
-                modifier = Modifier.fillMaxWidth(),
-                minLines = 3,
-                placeholder = { Text("Как вы себя чувствуете?") },
-            )
-
-            ritmButton(
-                text = "Сохранить",
-                onClick = { viewModel.save() },
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = MaterialTheme.spacing.md),
+@Composable
+private fun journalFlowSection(
+    state: JournalUiState,
+    viewModel: JournalViewModel,
+) {
+    Text(
+        text = "Выделения",
+        style = MaterialTheme.typography.titleSmall,
+        modifier = Modifier.padding(top = MaterialTheme.spacing.md),
+    )
+    Row(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm)) {
+        FlowIntensity.entries.forEach { flow ->
+            FilterChip(
+                selected = state.flow == flow,
+                onClick = { viewModel.setFlow(flow) },
+                label = { Text(flowIntensityLabel(flow)) },
+                colors =
+                    FilterChipDefaults.filterChipColors(
+                        selectedContainerColor = CycleAccent.copy(alpha = CHIP_ALPHA),
+                    ),
             )
         }
     }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun journalMoodSection(
+    state: JournalUiState,
+    viewModel: JournalViewModel,
+) {
+    Text(
+        text = "Настроение",
+        style = MaterialTheme.typography.titleSmall,
+        modifier = Modifier.padding(top = MaterialTheme.spacing.sm),
+    )
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm)) {
+        MoodLevel.entries
+            .filter { it != MoodLevel.UNKNOWN }
+            .forEach { mood ->
+                FilterChip(
+                    selected = state.mood == mood,
+                    onClick = { viewModel.setMood(mood) },
+                    label = { Text(moodLevelLabel(mood)) },
+                    colors =
+                        FilterChipDefaults.filterChipColors(
+                            selectedContainerColor = CycleAccent.copy(alpha = CHIP_ALPHA),
+                        ),
+                )
+            }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun journalSymptomsSection(
+    state: JournalUiState,
+    viewModel: JournalViewModel,
+) {
+    Text(
+        text = "Симптомы",
+        style = MaterialTheme.typography.titleSmall,
+        modifier = Modifier.padding(top = MaterialTheme.spacing.sm),
+    )
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm)) {
+        symptoms.forEach { (label, key) ->
+            FilterChip(
+                selected = state.symptoms.contains(key),
+                onClick = { viewModel.toggleSymptom(key) },
+                label = { Text(label) },
+                colors =
+                    FilterChipDefaults.filterChipColors(
+                        selectedContainerColor = CycleAccent.copy(alpha = CHIP_ALPHA),
+                    ),
+            )
+        }
+    }
+}
+
+@Composable
+private fun journalNoteSection(
+    state: JournalUiState,
+    viewModel: JournalViewModel,
+) {
+    Text(
+        text = "Заметка",
+        style = MaterialTheme.typography.titleSmall,
+        modifier = Modifier.padding(top = MaterialTheme.spacing.sm),
+    )
+    OutlinedTextField(
+        value = state.note,
+        onValueChange = { viewModel.setNote(it) },
+        modifier = Modifier.fillMaxWidth(),
+        minLines = NOTE_MIN_LINES,
+        placeholder = { Text("Как вы себя чувствуете?") },
+    )
+    ritmButton(
+        text = "Сохранить",
+        onClick = { viewModel.save() },
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = MaterialTheme.spacing.md),
+    )
 }

@@ -156,14 +156,14 @@
 
 | # | Задача | Owner | Статус | Зависит от |
 |---|---|---|---|---|
-| R-01 | Заморозить MVP-scope и синхронизировать DONE/TODO в TASKS.md | Lead | TODO | Этапы 0-6 |
-| R-02 | Зафиксировать чек-лист верификации и критерии pass/fail | Product + Test | TODO | R-01 |
+| R-01 | Заморозить MVP-scope и синхронизировать DONE/TODO в TASKS.md | Lead | DONE | Этапы 0-6 |
+| R-02 | Зафиксировать чек-лист верификации и критерии pass/fail | Product + Test | DONE | R-01 |
 | R-03 | Пройти базовый smoke-чек (HV-01..HV-04) на актуальном APK | Test | TODO | R-02 |
 | R-04 | Пройти модульные проверки (HV-05..HV-08 по готовности модулей) | Test | TODO | R-03 |
 | R-05 | Зафиксировать найденные баги и расставить приоритеты | Lead + Reviewer | TODO | R-03, R-04 |
 | R-06 | Закрыть blocker/high дефекты перед baseline-сборкой APK | Builder | TODO | R-05 |
-| R-07 | Запустить автоматическую сборку `:app:assembleDebug` и `qualityCheck` | Lead | TODO | R-06 |
-| R-08 | Сформировать единый отчёт и указать путь к APK-артефакту | Docs | TODO | R-07 |
+| R-07 | Запустить автоматическую сборку `:app:assembleDebug` и `qualityCheck` | Lead | DONE | R-06 |
+| R-08 | Сформировать единый отчёт и указать путь к APK-артефакту | Docs | DONE | R-07 |
 | R-09 | Установить APK на устройство и подтвердить финальный smoke-pass | Test | TODO | R-08 |
 | R-10 | Зафиксировать baseline MVP и открыть очередь этапа 2 | Lead | TODO | R-09 |
 

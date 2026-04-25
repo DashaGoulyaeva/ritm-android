@@ -16,6 +16,7 @@
 | Этап 4.5: Шаги | ✅ DONE | 8/10 | Сенсор + кэш + Today виджет; P-ST-01/A-ST-01 пропущены как TODO |
 | Этап 5: Интеграция Today | ✅ DONE | 9/10 | Все виджеты + empty states; T-10 (smoke tests) — TODO |
 | Этап 6: Настройки и полировка | ✅ DONE | 6/6 | Все экраны настроек и onboarding реализованы |
+| Этап 7: Owner Verification | 🟡 в процессе | 4/10 | R-01, R-02, R-07, R-08 закрыты; R-03/R-04/R-09/R-10 требуют физического устройства |
 
 ## Что уже сделано
 
@@ -31,12 +32,12 @@
 - Все настройки: вода, голодание, привычки, напоминания, onboarding;
 - quality gates (`lint`, `ktlint`, `detekt`, unit tests) настроены.
 
-## Ближайшие шаги
+## Ближайшие шаги (действия владельца)
 
-1. Запустить `assembleDebug` и `qualityCheck` (этап R-07).
-2. Пройти owner verification checklist (HV-01..HV-08).
-3. Закрыть blocker/high дефекты.
-4. Сформировать baseline APK и отчёт.
+1. Установить APK на устройство (`app/build/outputs/apk/debug/app-debug.apk`).
+2. Пройти чек-лист верификации: `docs/MVP_VERIFICATION_CHECKLIST.md` (HV-01..HV-08).
+3. Зафиксировать баги (R-05) и закрыть blockers (R-06).
+4. Подтвердить финальный smoke-pass (R-09) и зафиксировать baseline (R-10).
 
 ## Post-MVP (не в текущем объёме)
 

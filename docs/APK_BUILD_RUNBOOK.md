@@ -4,6 +4,18 @@
 
 ---
 
+## Текущий статус (2026-04-25)
+
+| Проверка | Статус |
+|---|---|
+| `:app:assembleDebug` | ✅ PASS |
+| `:app:testDebugUnitTest` | ✅ PASS |
+| `qualityCheck` (lint + ktlint + detekt) | ✅ PASS (detekt-долг feature-cycle устранён) |
+
+APK артефакт: `app/build/outputs/apk/debug/app-debug.apk`
+
+---
+
 ## Контур задачи сборки
 
 ### Предусловия
