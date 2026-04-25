@@ -6,6 +6,7 @@ import com.dashagoulyaeva.ritm.core.database.RitmDatabase
 import com.dashagoulyaeva.ritm.core.database.dao.CycleDao
 import com.dashagoulyaeva.ritm.core.database.dao.FastingDao
 import com.dashagoulyaeva.ritm.core.database.dao.HabitDao
+import com.dashagoulyaeva.ritm.core.database.dao.StepsDao
 import com.dashagoulyaeva.ritm.core.database.dao.WaterDao
 import dagger.Module
 import dagger.Provides
@@ -28,6 +29,7 @@ object DatabaseModule {
             "ritm.db",
         )
             .addMigrations(RitmDatabase.MIGRATION_1_2)
+            .addMigrations(RitmDatabase.MIGRATION_2_3)
             .build()
 
     @Provides
@@ -41,4 +43,8 @@ object DatabaseModule {
 
     @Provides
     fun provideCycleDao(db: RitmDatabase): CycleDao = db.cycleDao()
+
+    @Provides
+    @Singleton
+    fun provideStepsDao(db: RitmDatabase): StepsDao = db.stepsDao()
 }

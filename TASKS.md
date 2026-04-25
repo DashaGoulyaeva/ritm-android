@@ -96,7 +96,7 @@
 |---|---|---|---|---|
 | P-ST-01 | Mini-spec: шаги (Today + история + edge cases) | Product | TODO | — |
 | A-ST-01 | Technical note/ADR: contracts для шагов | Architect | TODO | P-ST-01 |
-| ST-01 | StepDailyEntity + StepsDao + Room migration | Builder | TODO | F-03, A-ST-01 |
+| ST-01 | StepDailyEntity + StepsDao + Room migration | Builder | DONE | F-03, A-ST-01 |
 | ST-02 | StepsSensorDataSource + permission check (`ACTIVITY_RECOGNITION`) | Builder | TODO | A-ST-01 |
 | ST-03 | StepsRepository (sensor + local day baseline/cache) | Builder | TODO | ST-01, ST-02 |
 | ST-04 | Use cases: ObserveTodaySteps + GetStepsHistory | Builder | TODO | ST-03 |
@@ -128,7 +128,7 @@
 
 | # | Задача | Owner | Статус | Зависит от |
 |---|---|---|---|---|
-| S-01 | SettingsScreen — структура + навигация | Builder | TODO | F-06 |
+| S-01 | SettingsScreen — структура + навигация | Builder | DONE | F-06 |
 | S-02 | Настройки воды (цель в стаканах, напоминание) | Builder | DONE | S-01, W-03, W-08 |
 | S-03 | Настройки fasting (режим по умолчанию) | Builder | TODO | S-01, FA-02 |
 | S-04 | Настройки привычек (список, архив) | Builder | TODO | S-01, H-02 |

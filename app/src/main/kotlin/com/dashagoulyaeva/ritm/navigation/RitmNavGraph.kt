@@ -18,6 +18,7 @@ import com.dashagoulyaeva.ritm.feature.cycle.presentation.cycleDayJournalScreen
 import com.dashagoulyaeva.ritm.feature.fasting.presentation.fastingHistoryScreen
 import com.dashagoulyaeva.ritm.feature.habits.presentation.habitDetailScreen
 import com.dashagoulyaeva.ritm.feature.habits.presentation.habitsScreen
+import com.dashagoulyaeva.ritm.feature.settings.presentation.settingsScreen
 import com.dashagoulyaeva.ritm.feature.settings.presentation.waterSettingsScreen
 import com.dashagoulyaeva.ritm.feature.water.presentation.waterHistoryScreen
 import com.dashagoulyaeva.ritm.navigation.components.ritmBottomBar
@@ -70,7 +71,7 @@ fun ritmNavGraph() {
                 )
             }
             composable(TopLevelDestination.SETTINGS.route) {
-                waterSettingsScreen()
+                settingsScreen(onWaterSettingsClick = { navController.navigate("water_settings") })
             }
             composable(WATER_HISTORY_ROUTE) {
                 waterHistoryScreen(

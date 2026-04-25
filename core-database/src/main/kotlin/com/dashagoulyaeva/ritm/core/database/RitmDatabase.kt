@@ -8,12 +8,14 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.dashagoulyaeva.ritm.core.database.dao.CycleDao
 import com.dashagoulyaeva.ritm.core.database.dao.FastingDao
 import com.dashagoulyaeva.ritm.core.database.dao.HabitDao
+import com.dashagoulyaeva.ritm.core.database.dao.StepsDao
 import com.dashagoulyaeva.ritm.core.database.dao.WaterDao
 import com.dashagoulyaeva.ritm.core.database.entity.CycleDayLogEntity
 import com.dashagoulyaeva.ritm.core.database.entity.CyclePeriodEntity
 import com.dashagoulyaeva.ritm.core.database.entity.FastingSessionEntity
 import com.dashagoulyaeva.ritm.core.database.entity.HabitCheckEntity
 import com.dashagoulyaeva.ritm.core.database.entity.HabitEntity
+import com.dashagoulyaeva.ritm.core.database.entity.StepDailyEntity
 import com.dashagoulyaeva.ritm.core.database.entity.WaterEntryEntity
 
 @Database(
@@ -24,8 +26,9 @@ import com.dashagoulyaeva.ritm.core.database.entity.WaterEntryEntity
         FastingSessionEntity::class,
         CyclePeriodEntity::class,
         CycleDayLogEntity::class,
+        StepDailyEntity::class,
     ],
-    version = 2,
+    version = 3,
     exportSchema = false,
 )
 @TypeConverters(Converters::class)
@@ -34,6 +37,7 @@ abstract class RitmDatabase : RoomDatabase() {
     abstract fun habitDao(): HabitDao
     abstract fun fastingDao(): FastingDao
     abstract fun cycleDao(): CycleDao
+    abstract fun stepsDao(): StepsDao
 
     companion object {
         val MIGRATION_1_2 = object : Migration(1, 2) {
@@ -90,6 +94,20 @@ abstract class RitmDatabase : RoomDatabase() {
                     )
                 """.trimIndent())
                 db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS index_cycle_day_logs_date ON cycle_day_logs(date)")
+            }
+        }
+
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS step_daily_logs (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        date TEXT NOT NULL,
+                        stepCount INTEGER NOT NULL,
+                        lastUpdatedAt INTEGER NOT NULL
+                    )
+                """.trimIndent())
+                db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS index_step_daily_logs_date ON step_daily_logs(date)")
             }
         }
     }

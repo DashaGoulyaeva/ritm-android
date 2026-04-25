@@ -28,3 +28,10 @@ render.experimental.xml
 Thumbs.db
 
 .private/
+
+# Design working files (wireframe drafts, Figma exports, HTML previews)
+# Final design decisions go to DECISIONS/*.md instead
+design_v*/
+design_*/
+*.fig
+
