@@ -3,7 +3,6 @@ package com.dashagoulyaeva.ritm.feature.home.presentation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -11,8 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.dashagoulyaeva.ritm.core.ui.components.RitmRhythm
+import com.dashagoulyaeva.ritm.core.ui.components.colors
+import com.dashagoulyaeva.ritm.core.ui.components.ritmAccentCard
 import com.dashagoulyaeva.ritm.core.ui.components.ritmBanner
-import com.dashagoulyaeva.ritm.core.ui.components.ritmSectionCard
 import com.dashagoulyaeva.ritm.core.ui.theme.StepsAccent
 import com.dashagoulyaeva.ritm.core.ui.theme.spacing
 
@@ -22,9 +22,8 @@ fun stepsTodayWidget(
     onHistoryClick: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
-    ritmSectionCard(modifier = modifier.fillMaxWidth()) {
+    ritmAccentCard(accentColor = RitmRhythm.Steps.colors().accent, modifier = modifier.fillMaxWidth()) {
         Column(
-            modifier = Modifier.padding(MaterialTheme.spacing.xs),
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm),
         ) {
             Text(

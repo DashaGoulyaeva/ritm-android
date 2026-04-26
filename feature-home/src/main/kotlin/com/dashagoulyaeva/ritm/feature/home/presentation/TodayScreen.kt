@@ -27,7 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dashagoulyaeva.ritm.core.ui.components.RitmRhythm
+import com.dashagoulyaeva.ritm.core.ui.components.colors
 import com.dashagoulyaeva.ritm.core.ui.components.rhythmOrb
+import com.dashagoulyaeva.ritm.core.ui.components.ritmAccentCard
 import com.dashagoulyaeva.ritm.core.ui.components.ritmBanner
 import com.dashagoulyaeva.ritm.core.ui.components.ritmButton
 import com.dashagoulyaeva.ritm.core.ui.components.ritmSectionCard
@@ -233,7 +235,7 @@ private fun waterWidget(
     onHistoryClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    ritmSectionCard(modifier = modifier.fillMaxWidth()) {
+    ritmAccentCard(accentColor = RitmRhythm.Water.colors().accent, modifier = modifier.fillMaxWidth()) {
         Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm)) {
             Text(
                 text = "Вода",
@@ -283,7 +285,7 @@ private fun habitsWidget(
     onToggle: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    ritmSectionCard(modifier = modifier.fillMaxWidth()) {
+    ritmAccentCard(accentColor = RitmRhythm.Habits.colors().accent, modifier = modifier.fillMaxWidth()) {
         Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.xs)) {
             Text(
                 text = "Привычки",
@@ -326,7 +328,7 @@ private fun fastingWidget(
     onStopClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    ritmSectionCard(modifier = modifier.fillMaxWidth()) {
+    ritmAccentCard(accentColor = RitmRhythm.Fasting.colors().accent, modifier = modifier.fillMaxWidth()) {
         Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm)) {
             Text(
                 text = "Голодание",
@@ -377,7 +379,7 @@ private fun cycleWidget(
     cycleDayInfo: CycleDayInfo?,
     modifier: Modifier = Modifier,
 ) {
-    ritmSectionCard(modifier = modifier.fillMaxWidth()) {
+    ritmAccentCard(accentColor = RitmRhythm.Cycle.colors().accent, modifier = modifier.fillMaxWidth()) {
         Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.sm)) {
             Text(
                 text = "Цикл",
