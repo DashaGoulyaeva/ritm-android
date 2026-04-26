@@ -29,6 +29,7 @@ dependencies {
     implementation(project(":core-ui"))
     implementation(project(":core-database"))
     implementation(project(":feature-fasting"))
+    implementation(project(":feature-habits"))
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
@@ -38,6 +39,9 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     implementation(libs.hilt.navigation.compose)
+    implementation(libs.workmanager.ktx)
+    implementation(libs.hilt.work)
+    ksp(libs.hilt.work.compiler)
     implementation(libs.datastore.preferences)
     implementation(libs.kotlinx.coroutines.android)
 
