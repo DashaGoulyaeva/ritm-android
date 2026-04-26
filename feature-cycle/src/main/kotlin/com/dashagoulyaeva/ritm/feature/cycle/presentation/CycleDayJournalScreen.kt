@@ -247,18 +247,22 @@ private fun journalNoteSection(
         minLines = NOTE_MIN_LINES,
         placeholder = { Text("что сегодня с телом и головой...") },
     )
-    Button(
-        onClick = { viewModel.save() },
+    Row(
         modifier = Modifier
-            .align(Alignment.End)
+            .fillMaxWidth()
             .padding(vertical = MaterialTheme.spacing.md),
-        shape = RoundedCornerShape(999.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = CycleAccent),
+        horizontalArrangement = Arrangement.End,
     ) {
-        Text(
-            text = "сохранить",
-            fontFamily = SpaceGrotesk,
-            fontWeight = FontWeight.SemiBold,
-        )
+        Button(
+            onClick = { viewModel.save() },
+            shape = RoundedCornerShape(999.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = CycleAccent),
+        ) {
+            Text(
+                text = "сохранить",
+                fontFamily = SpaceGrotesk,
+                fontWeight = FontWeight.SemiBold,
+            )
+        }
     }
 }

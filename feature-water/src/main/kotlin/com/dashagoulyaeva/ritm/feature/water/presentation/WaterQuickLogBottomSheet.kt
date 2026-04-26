@@ -69,7 +69,7 @@ fun waterQuickLogBottomSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, bottom = 24.dp),
+                .padding(start = 16.dp, end = 16.dp, bottom = 24.dp),
         ) {
             // 1. DRAG HANDLE
             Box(

@@ -195,7 +195,7 @@ private fun OnboardingStep0(onNext: () -> Unit, onSkip: () -> Unit) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 18.dp, bottom = 24.dp),
+                .padding(start = 18.dp, end = 18.dp, bottom = 24.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
