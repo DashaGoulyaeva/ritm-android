@@ -22,10 +22,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.dashagoulyaeva.ritm.core.ui.theme.spacing
 
-// TODO S-04: wire HabitRepository archive list
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun habitsSettingsScreen(onBack: () -> Unit) {
+fun habitsSettingsScreen(
+    onBack: () -> Unit,
+    onArchiveClick: () -> Unit = {},
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -51,7 +53,7 @@ fun habitsSettingsScreen(onBack: () -> Unit) {
             habitsSettingsItem(
                 title = "Архив привычек",
                 subtitle = "Просмотр архивированных привычек",
-                onClick = {},
+                onClick = onArchiveClick,
             )
             HorizontalDivider()
         }

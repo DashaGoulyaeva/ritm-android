@@ -18,15 +18,21 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.dashagoulyaeva.ritm.core.ui.theme.spacing
-
-// TODO S-05: wire WorkManager reminder toggles
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun reminderSettingsScreen(onBack: () -> Unit) {
+fun reminderSettingsScreen(
+    onBack: () -> Unit,
+    viewModel: ReminderSettingsViewModel = hiltViewModel(),
+) {
+    val uiState by viewModel.uiState.collectAsState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -43,11 +49,10 @@ fun reminderSettingsScreen(onBack: () -> Unit) {
         },
     ) { padding ->
         LazyColumn(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .padding(horizontal = MaterialTheme.spacing.md),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(horizontal = MaterialTheme.spacing.md),
         ) {
             item {
                 reminderInfoItem(
@@ -59,16 +64,16 @@ fun reminderSettingsScreen(onBack: () -> Unit) {
             item {
                 reminderSwitchItem(
                     title = "Напоминание о привычках",
-                    checked = false,
-                    onCheckedChange = { /* TODO S-05: wire WorkManager reminder toggles */ },
+                    checked = uiState.habitsReminderEnabled,
+                    onCheckedChange = { viewModel.setHabitsReminder(it) },
                 )
                 HorizontalDivider()
             }
             item {
                 reminderSwitchItem(
                     title = "Напоминание о голодании",
-                    checked = false,
-                    onCheckedChange = { /* TODO S-05: wire WorkManager reminder toggles */ },
+                    checked = uiState.fastingReminderEnabled,
+                    onCheckedChange = { viewModel.setFastingReminder(it) },
                 )
             }
         }
@@ -81,10 +86,9 @@ private fun reminderInfoItem(
     subtitle: String,
 ) {
     Column(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(vertical = MaterialTheme.spacing.md),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = MaterialTheme.spacing.md),
     ) {
         Text(text = title, style = MaterialTheme.typography.bodyLarge)
         Text(
@@ -102,10 +106,9 @@ private fun reminderSwitchItem(
     onCheckedChange: (Boolean) -> Unit,
 ) {
     Row(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(vertical = MaterialTheme.spacing.sm),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = MaterialTheme.spacing.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(

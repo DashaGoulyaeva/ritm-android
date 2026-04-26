@@ -11,4 +11,5 @@ object PreferenceKeys {
     val REMINDER_WATER_TIME = stringPreferencesKey("reminder_water_time")
     val REMINDER_HABITS_ENABLED = booleanPreferencesKey("reminder_habits_enabled")
     val REMINDER_HABITS_TIME = stringPreferencesKey("reminder_habits_time")
+    val REMINDER_FASTING_ENABLED = booleanPreferencesKey("reminder_fasting_enabled")
 }

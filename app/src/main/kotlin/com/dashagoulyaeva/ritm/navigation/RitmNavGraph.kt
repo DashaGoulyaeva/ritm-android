@@ -15,6 +15,7 @@ import com.dashagoulyaeva.ritm.feature.cycle.presentation.cycleCalendarScreen
 import com.dashagoulyaeva.ritm.feature.cycle.presentation.cycleDayJournalScreen
 import com.dashagoulyaeva.ritm.feature.fasting.presentation.fastingHistoryScreen
 import com.dashagoulyaeva.ritm.feature.habits.presentation.habitDetailScreen
+import com.dashagoulyaeva.ritm.feature.habits.presentation.habitsArchiveScreen
 import com.dashagoulyaeva.ritm.feature.habits.presentation.habitsScreen
 import com.dashagoulyaeva.ritm.feature.home.presentation.stepsHistoryScreen
 import com.dashagoulyaeva.ritm.feature.home.presentation.todayScreen
@@ -113,7 +114,13 @@ private fun NavGraphBuilder.settingsRoutes(navController: NavHostController) {
         fastingSettingsScreen(onBack = { navController.popBackStack() })
     }
     composable("habits_settings") {
-        habitsSettingsScreen(onBack = { navController.popBackStack() })
+        habitsSettingsScreen(
+            onBack = { navController.popBackStack() },
+            onArchiveClick = { navController.navigate("habits_archive") },
+        )
+    }
+    composable("habits_archive") {
+        habitsArchiveScreen(onBack = { navController.popBackStack() })
     }
     composable("reminder_settings") {
         reminderSettingsScreen(onBack = { navController.popBackStack() })
