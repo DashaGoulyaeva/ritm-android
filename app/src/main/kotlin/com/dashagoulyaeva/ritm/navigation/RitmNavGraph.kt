@@ -1,4 +1,4 @@
-﻿package com.dashagoulyaeva.ritm.navigation
+package com.dashagoulyaeva.ritm.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -47,8 +47,9 @@ fun ritmNavGraph() {
             modifier = Modifier.padding(innerPadding),
         ) {
             todayRoutes(navController)
-            habitRoutes(navController)
             cycleRoutes(navController)
+            waterRoutes(navController)
+            habitRoutes(navController)
             settingsRoutes(navController)
             historyRoutes(navController)
         }
@@ -68,21 +69,6 @@ private fun NavGraphBuilder.todayRoutes(navController: NavHostController) {
     }
 }
 
-private fun NavGraphBuilder.habitRoutes(navController: NavHostController) {
-    composable(TopLevelDestination.HABITS.route) {
-        habitsScreen(onHabitClick = { id -> navController.navigate("habit_detail/$id") })
-    }
-    composable(
-        route = "habit_detail/{habitId}",
-        arguments = listOf(navArgument("habitId") { type = NavType.LongType }),
-    ) {
-        habitDetailScreen(
-            onBack = { navController.popBackStack() },
-            onArchived = { navController.popBackStack() },
-        )
-    }
-}
-
 private fun NavGraphBuilder.cycleRoutes(navController: NavHostController) {
     composable(TopLevelDestination.CYCLE.route) {
         cycleCalendarScreen(onDayClick = { date -> navController.navigate("cycle_journal/$date") })
@@ -98,8 +84,29 @@ private fun NavGraphBuilder.cycleRoutes(navController: NavHostController) {
     }
 }
 
+private fun NavGraphBuilder.waterRoutes(navController: NavHostController) {
+    composable(TopLevelDestination.WATER.route) {
+        waterHistoryScreen(onBackClick = {})
+    }
+}
+
+private fun NavGraphBuilder.habitRoutes(navController: NavHostController) {
+    composable(TopLevelDestination.HABITS.route) {
+        habitsScreen(onHabitClick = { id -> navController.navigate("habit_detail/$id") })
+    }
+    composable(
+        route = "habit_detail/{habitId}",
+        arguments = listOf(navArgument("habitId") { type = NavType.LongType }),
+    ) {
+        habitDetailScreen(
+            onBack = { navController.popBackStack() },
+            onArchived = { navController.popBackStack() },
+        )
+    }
+}
+
 private fun NavGraphBuilder.settingsRoutes(navController: NavHostController) {
-    composable(TopLevelDestination.SETTINGS.route) {
+    composable(TopLevelDestination.MORE.route) {
         settingsScreen(
             onWaterSettingsClick = { navController.navigate("water_settings") },
             onFastingSettingsClick = { navController.navigate("fasting_settings") },
