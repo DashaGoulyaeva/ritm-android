@@ -4,6 +4,15 @@
 
 ---
 
+## 2026-04-26
+
+- Добавлена иконка приложения из логотипа (DESIGN_in_progress/лого.png) — adaptive icon с белым фоном.
+- Карточки получили border 1dp + elevation 1dp — теперь видны на бежевом фоне.
+- Добавлен компонент `ritmAccentCard` (цветная полоска слева, design v4 TodayCard style).
+- Виджеты Today: вода/привычки/голодание/цикл/шаги — каждый с цветом своего ритма.
+- Исправлен горизонтальный padding в WaterSettingsScreen.
+- Составлен полный V1-трек: этапы 9-14, 38 атомарных задач от stub-ощущения до публичного релиза.
+
 ## 2026-04-25
 
 - Закрыт полный quality gate после применения дизайна v4: `qualityCheck` и `:app:assembleDebug` проходят успешно; APK собирается в `C:\Users\1\AppData\Local\ritm-android-build\app\outputs\apk\debug\app-debug.apk`.

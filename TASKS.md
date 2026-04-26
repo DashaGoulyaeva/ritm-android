@@ -158,36 +158,122 @@
 |---|---|---|---|---|
 | R-01 | Заморозить MVP-scope и синхронизировать DONE/TODO в TASKS.md | Lead | DONE | Этапы 0-6 |
 | R-02 | Зафиксировать чек-лист верификации и критерии pass/fail | Product + Test | DONE | R-01 |
-| R-03 | Пройти базовый smoke-чек (HV-01..HV-04) на актуальном APK | Test | TODO | R-02 |
-| R-04 | Пройти модульные проверки (HV-05..HV-08 по готовности модулей) | Test | TODO | R-03 |
-| R-05 | Зафиксировать найденные баги и расставить приоритеты | Lead + Reviewer | TODO | R-03, R-04 |
-| R-06 | Закрыть blocker/high дефекты перед baseline-сборкой APK | Builder | TODO | R-05 |
+| R-03 | Пройти базовый smoke-чек (HV-01..HV-04) на актуальном APK | Test | IN_PROGRESS | R-02 |
+| R-04 | Пройти модульные проверки (HV-05..HV-08 по готовности модулей) | Test | IN_PROGRESS | R-03 |
+| R-05 | Зафиксировать найденные баги и расставить приоритеты | Lead + Reviewer | DONE | R-03, R-04 |
+| R-06 | Закрыть blocker/high дефекты (навигация, настройки вылет, стоп-голодание, конец цикла) | Builder | DONE | R-05 |
 | R-07 | Запустить автоматическую сборку `:app:assembleDebug` и `qualityCheck` | Lead | DONE | R-06 |
 | R-08 | Сформировать единый отчёт и указать путь к APK-артефакту | Docs | DONE | R-07 |
 | R-09 | Установить APK на устройство и подтвердить финальный smoke-pass | Test | TODO | R-08 |
-| R-10 | Зафиксировать baseline MVP и открыть очередь этапа 2 | Lead | TODO | R-09 |
+| R-10 | Зафиксировать baseline MVP и поставить тег v0.1.0-mvp | Lead | TODO | R-09 |
 
 Чек-лист верификации: `docs/MVP_VERIFICATION_CHECKLIST.md`  
 Регламент сборки и отчёта: `docs/APK_BUILD_RUNBOOK.md`
 
 ---
 
-## Этап 8: Развитие после MVP
+## Этап 9: V1 — Убрать stub-ощущение (V1-03)
+
+> Цель: пользователь не должен попадать на экран "скоро" или сломанный переключатель.
+> Приоритет: BLOCKER для публичного релиза.
 
 | # | Задача | Owner | Статус | Зависит от |
 |---|---|---|---|---|
-| P2-01 | Сбор и нормализация пользовательского фидбека после MVP | Product | TODO | R-10 |
-| P2-02 | Приоритизация фидбека (impact/effort) и формирование release-backlog | Lead + Product | TODO | P2-01 |
-| P2-03 | UX-polish ключевых экранов | Builder + Designer | TODO | P2-02 |
-| P2-04 | Stability sprint: crash/ANR/edge cases | Builder + Test | TODO | P2-02 |
-| P2-05 | Экспорт/резерв локальных данных | Builder | TODO | P2-02 |
-| P2-06 | Privacy-first аналитика продукта | Architect + Builder | TODO | P2-02 |
-| P2-07 | Подготовка release-подписи и versioning для сторов | Lead + Builder | TODO | P2-04 |
-| P2-08 | Store-материалы (иконка, скриншоты, описания, policy) | Product + Docs | TODO | P2-07 |
-| P2-09 | Закрытое тестирование в сторе и отчёт по качеству | Test + Lead | TODO | P2-08 |
-| P2-10 | Публичный релиз и пост-релизный мониторинг | Lead | TODO | P2-09 |
+| V1-03-01 | Fasting settings: wire DataStore для хранения режима по умолчанию (16:8, 18:6, 20:4, custom) | Builder | TODO | R-10 |
+| V1-03-02 | Habits settings: показать список архивированных привычек (экран archive list) | Builder | TODO | R-10 |
+| V1-03-03 | Reminder settings: подключить WorkManager для привычек (вечернее напоминание по времени) | Builder | TODO | R-10 |
+| V1-03-04 | Reminder settings: подключить WorkManager для fasting (уведомление об окончании окна) | Builder | TODO | V1-03-03 |
+| V1-03-05 | Steps history screen: реализовать список шагов по дням (Room query + LazyColumn) | Builder | TODO | R-10 |
+| V1-03-06 | Today → шаги: подключить навигацию к StepsHistoryScreen из виджета | Builder | TODO | V1-03-05 |
+| V1-03-07 | Today → вода: починить back navigation (Bottom nav «Сегодня» из WaterHistoryScreen) | Builder | TODO | R-10 |
+| V1-03-08 | Onboarding: 3-экранный flow (Привет / Пять ритмов / Разрешения) с permission request | Builder | TODO | R-10 |
+| V1-03-09 | Скрыть или заменить все TODO-заглушки из видимых пользователю экранов | Builder | TODO | V1-03-01..08 |
 
-Подробный план этапа 2: `docs/PHASE2_EXPANSION_PLAN.md`
+---
+
+## Этап 10: V1 — Сильный первый опыт (V1-04)
+
+> Цель: Today как главный экран для скриншотов; понятен без объяснений.
+
+| # | Задача | Owner | Статус | Зависит от |
+|---|---|---|---|---|
+| V1-04-01 | Today: dark hero banner («Сегодня») с датой, днём недели и коротким статусом | Builder | TODO | Этап 9 |
+| V1-04-02 | Today: заменить мелкие orb-кружки на горизонтальные карточки-пульсы по дизайну v4 | Builder | TODO | V1-04-01 |
+| V1-04-03 | Today: empty state для пустого дня — "Добро пожаловать, начни с воды или привычки" | Builder | TODO | V1-04-01 |
+| V1-04-04 | Вода: кнопка отмены последней записи (undo last entry) | Builder | TODO | Этап 9 |
+| V1-04-05 | Вода: история с группировкой по дням + статистика 7/30 дней | Builder | TODO | Этап 9 |
+| V1-04-06 | Привычки: пресеты для быстрого старта (сон, прогулка, медитация, вода) | Builder | TODO | Этап 9 |
+| V1-04-07 | Привычки: расписание привычки (ежедневно / по дням недели) | Builder | TODO | Этап 9 |
+| V1-04-08 | Привычки: статистика 7/30 дней в HabitDetailScreen | Builder | TODO | Этап 9 |
+| V1-04-09 | Fasting: eating-window таймер (обратный отсчёт окна еды) | Builder | TODO | Этап 9 |
+| V1-04-10 | Fasting: статистика сессий (завершённые, средняя длительность, текущий стрик) | Builder | TODO | Этап 9 |
+| V1-04-11 | Цикл: редактирование прошлых дат начала/конца периода | Builder | TODO | Этап 9 |
+| V1-04-12 | Цикл: дисклеймер "не заменяет врача" в UI | Builder | TODO | Этап 9 |
+| V1-04-13 | Permission flow: объяснение ACTIVITY_RECOGNITION при первом запуске шагомера | Builder | TODO | V1-03-08 |
+| V1-04-14 | Notification permission flow: запрос POST_NOTIFICATIONS с объяснением | Builder | TODO | V1-03-08 |
+| V1-04-15 | Проверка на малых экранах (5") и больших (6.7"): отступы, карточки, текст | Test | TODO | V1-04-01..14 |
+
+---
+
+## Этап 11: V1 — Данные и доверие (V1-05)
+
+> Цель: данные не теряются, privacy-позиция видна.
+
+| # | Задача | Owner | Статус | Зависит от |
+|---|---|---|---|---|
+| V1-05-01 | Проверить все Room migration: добавить тест `MigrationTest` для schema v1→v2 и далее | Test | TODO | Этап 9 |
+| V1-05-02 | Простой экспорт данных: JSON-файл всех ритмов через Share Intent | Builder | TODO | Этап 9 |
+| V1-05-03 | Экран "О приложении": версия, дата сборки, privacy-позиция, дисклеймер | Builder | TODO | Этап 9 |
+| V1-05-04 | Privacy policy: текст в assets + ссылка из "О приложении" и из настроек | Docs | TODO | V1-05-03 |
+| V1-05-05 | Проверить сохранение данных после uninstall/reinstall (backup rules) | Test | TODO | V1-05-01 |
+
+---
+
+## Этап 12: V1 — Release-сборка (V1-06)
+
+> Цель: воспроизводимая release-сборка 1.0.0.
+
+| # | Задача | Owner | Статус | Зависит от |
+|---|---|---|---|---|
+| V1-06-01 | Создать keystore и настроить signing config в `app/build.gradle.kts` | Lead | TODO | Этап 11 |
+| V1-06-02 | Настроить versioning: `versionCode = 1`, `versionName = "1.0.0"` | Builder | TODO | V1-06-01 |
+| V1-06-03 | Настроить R8/ProGuard rules для Hilt, Room, Compose | Builder | TODO | V1-06-01 |
+| V1-06-04 | Собрать release AAB: `./gradlew :app:bundleRelease` | Lead | TODO | V1-06-02, V1-06-03 |
+| V1-06-05 | Проверить release-сборку на устройстве (install & smoke test) | Test | TODO | V1-06-04 |
+| V1-06-06 | Обновить `docs/APK_BUILD_RUNBOOK.md` для release-сборки | Docs | TODO | V1-06-04 |
+
+---
+
+## Этап 13: V1 — Store-материалы (V1-07)
+
+> Цель: страница стора выглядит как настоящий продукт.
+
+| # | Задача | Owner | Статус | Зависит от |
+|---|---|---|---|---|
+| V1-07-01 | Финальная иконка высокого разрешения (512×512 PNG) для Google Play | Designer | TODO | Этап 12 |
+| V1-07-02 | Feature graphic 1024×500 для Google Play | Designer | TODO | Этап 12 |
+| V1-07-03 | 5 скриншотов (Today, Вода, Привычки, Цикл, Настройки) — phone portrait | Designer | TODO | Этап 10 |
+| V1-07-04 | Короткое описание приложения (80 символов) | Product | TODO | Этап 12 |
+| V1-07-05 | Полное описание (до 4000 знаков, русский язык) | Product | TODO | Этап 12 |
+| V1-07-06 | Changelog v1.0.0 (first release notes) | Docs | TODO | Этап 12 |
+| V1-07-07 | Зарегистрировать приложение в Google Play Console | Lead | TODO | V1-06-04 |
+| V1-07-08 | QA store checklist: иконка, описание, скриншоты, policy, возрастной рейтинг | Test | TODO | V1-07-01..06 |
+
+---
+
+## Этап 14: V1 — Закрытый тест и запуск (V1-08, V1-09)
+
+| # | Задача | Owner | Статус | Зависит от |
+|---|---|---|---|---|
+| V1-08-01 | Подготовить release APK для закрытых тестировщиков | Lead | TODO | Этап 12 |
+| V1-08-02 | Собрать 5-20 тестировщиков и раздать сборку (Internal Testing в Play Console) | Lead | TODO | V1-08-01 |
+| V1-08-03 | Собрать фидбек по 5 сценариям: первый запуск / Today / уведомления / данные / стабильность | Test | TODO | V1-08-02 |
+| V1-08-04 | Классифицировать фидбек (blocker/high/medium) и закрыть критичное | Lead + Builder | TODO | V1-08-03 |
+| V1-08-05 | Go/No-Go решение | Lead | TODO | V1-08-04 |
+| V1-09-01 | Поставить тег `v1.0.0` и зафиксировать release notes | Lead | TODO | V1-08-05 |
+| V1-09-02 | Опубликовать в Google Play (Production или Staged rollout 20%) | Lead | TODO | V1-09-01 |
+| V1-09-03 | Включить пост-релизный мониторинг (Play Console crash reporting) | Lead | TODO | V1-09-02 |
+| V1-09-04 | Завести backlog V1.1 по реальному фидбеку | Product | TODO | V1-09-02 |
 
 ---
 
@@ -196,10 +282,11 @@
 *(Не реализовывать без явного решения лида проекта)*
 
 - Тёмная тема
-- Экспорт данных
-- Health Connect
+- Health Connect (шаги + активность)
 - Виджеты главного экрана
-- Аналитика и тренды
-- Wear OS
+- Аналитика и тренды (графики за месяц)
+- Wear OS companion
+- Облачный backup (опционально, privacy-first)
+- Импорт из Apple Health / Google Fit
 
 
